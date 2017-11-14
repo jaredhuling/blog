@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Jared Huling</title>
+    <link>/</link>
+    <description>Recent content on Jared Huling</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Wed, 19 Jul 2017 00:00:00 +0000</lastBuildDate>
+    
+	<atom:link href="/feed.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>The oem package for penalized regression is on CRAN</title>
+      <link>/2017/07/19/the-oem-package-for-penalized-regression-is-on-cran/</link>
+      <pubDate>Wed, 19 Jul 2017 00:00:00 +0000</pubDate>
+      
+      <guid>/2017/07/19/the-oem-package-for-penalized-regression-is-on-cran/</guid>
+      <description>The oem package has been on CRAN for some time now, but with the latest update I expect few structural changes to the user interface. oem is a package for the estimation of various penalized regression models using the oem algorithm of Xiong et al. (2016). The focus of oem is to provide high performance computation for big tall data. Many applications not only have a large number of variables, but a vast number of observations; oem is designed to perform well in these settings.</description>
+    </item>
+    
+    <item>
+      <title>Fast and Big Linear Model Fitting with bigmemory and RcppEigen</title>
+      <link>/2016/07/07/fast-and-big-linear-model-fitting-with-bigmemory-and-rcppeigen/</link>
+      <pubDate>Thu, 07 Jul 2016 00:00:00 +0000</pubDate>
+      
+      <guid>/2016/07/07/fast-and-big-linear-model-fitting-with-bigmemory-and-rcppeigen/</guid>
+      <description>In a previous post, I went over the basics of linking up bigmemory and the eigen C++ library via RcppEigen. In this post I&amp;rsquo;ll take this a bit further by creating a version of the fastLm() function of RcppEigen that can accept bigmemory objects. By doing so, we will create a fast way to fit linear models using data which is too big to fit in RAM. With RcppEigen, fitting linear models using out-of-memory computation doesn&amp;rsquo;t have to be slow.</description>
+    </item>
+    
+    <item>
+      <title>Linking bigmemory and RcppEigen</title>
+      <link>/2016/06/04/linking-bigmemory-and-rcppeigen/</link>
+      <pubDate>Sat, 04 Jun 2016 00:00:00 +0000</pubDate>
+      
+      <guid>/2016/06/04/linking-bigmemory-and-rcppeigen/</guid>
+      <description>The bigmemory package offers a set of tools for R which allow for manipulation larger-than-memory objects within R. It has some basic functions but is certainly not comprehensive. The eigen C++ linear algebra library is a highly efficient numerical linear algebra library and can be interfaced to R through RcppEigen by Douglas Bates and Dirk Eddelbuettel. If bigmemory and Eigen can be linked, then one would be able to do highly efficient linear algebra computation on data that is too big for memory (exactly what you thought R couldn&amp;rsquo;t do).</description>
+    </item>
+    
+    <item>
+      <title>Hello R Markdown</title>
+      <link>/2015/07/23/hello-r-markdown/</link>
+      <pubDate>Thu, 23 Jul 2015 21:13:14 -0500</pubDate>
+      
+      <guid>/2015/07/23/hello-r-markdown/</guid>
+      <description>R Markdown This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see http://rmarkdown.rstudio.com.
+You can embed an R code chunk like this:
+summary(cars) ## speed dist ## Min. : 4.0 Min. : 2.00 ## 1st Qu.:12.0 1st Qu.: 26.00 ## Median :15.0 Median : 36.00 ## Mean :15.4 Mean : 42.98 ## 3rd Qu.</description>
+    </item>
+    
+    <item>
+      <title>Migrate to Hugo from Jekyll</title>
+      <link>/2014/03/10/migrate-to-hugo-from-jekyll/</link>
+      <pubDate>Mon, 10 Mar 2014 00:00:00 +0000</pubDate>
+      
+      <guid>/2014/03/10/migrate-to-hugo-from-jekyll/</guid>
+      <description>Move static content to static Jekyll has a rule that any directory not starting with _ will be copied as-is to the _site output. Hugo keeps all static content under static. You should therefore move it all there. With Jekyll, something that looked like
+▾ &amp;lt;root&amp;gt;/ ▾ images/ logo.png  should become
+▾ &amp;lt;root&amp;gt;/ ▾ static/ ▾ images/ logo.png  Additionally, you&amp;rsquo;ll want any files that should reside at the root (such as CNAME) to be moved to static.</description>
+    </item>
+    
+  </channel>
+</rss>
