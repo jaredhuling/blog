@@ -3,108 +3,108 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
-    <loc>/blog/2017/07/19/the-oem-package-for-penalized-regression-is-on-cran/</loc>
+    <loc>/2017/07/19/the-oem-package-for-penalized-regression-is-on-cran/</loc>
     <lastmod>2017-07-19T00:00:00+00:00</lastmod>
   </url>
   
   <url>
-    <loc>/blog/2016/07/07/fast-and-big-linear-model-fitting-with-bigmemory-and-rcppeigen/</loc>
+    <loc>/2016/07/07/fast-and-big-linear-model-fitting-with-bigmemory-and-rcppeigen/</loc>
     <lastmod>2016-07-07T00:00:00+00:00</lastmod>
   </url>
   
   <url>
-    <loc>/blog/2016/06/04/linking-bigmemory-and-rcppeigen/</loc>
+    <loc>/2016/06/04/linking-bigmemory-and-rcppeigen/</loc>
     <lastmod>2016-06-04T00:00:00+00:00</lastmod>
   </url>
   
   <url>
-    <loc>/blog/2015/07/23/hello-r-markdown/</loc>
+    <loc>/2015/07/23/hello-r-markdown/</loc>
     <lastmod>2015-07-23T21:13:14-05:00</lastmod>
   </url>
   
   <url>
-    <loc>/blog/about/</loc>
+    <loc>/about/</loc>
     <lastmod>2015-06-20T14:02:37+02:00</lastmod>
   </url>
   
   <url>
-    <loc>/blog/2014/03/10/migrate-to-hugo-from-jekyll/</loc>
+    <loc>/2014/03/10/migrate-to-hugo-from-jekyll/</loc>
     <lastmod>2014-03-10T00:00:00+00:00</lastmod>
   </url>
   
   <url>
-    <loc>/blog/tags/c&#43;&#43;/</loc>
+    <loc>/tags/c&#43;&#43;/</loc>
     <lastmod>2017-07-19T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>/blog/categories/</loc>
+    <loc>/categories/</loc>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>/blog/tags/computational-statistics/</loc>
+    <loc>/tags/computational-statistics/</loc>
     <lastmod>2017-07-19T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>/blog/tags/eigen/</loc>
+    <loc>/tags/eigen/</loc>
     <lastmod>2016-07-07T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>/blog/</loc>
+    <loc>/</loc>
     <lastmod>2017-07-19T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>/blog/tags/machine-learning/</loc>
+    <loc>/tags/machine-learning/</loc>
     <lastmod>2017-07-19T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>/blog/tags/plot/</loc>
+    <loc>/tags/plot/</loc>
     <lastmod>2015-07-23T21:13:14-05:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>/blog/post/</loc>
+    <loc>/post/</loc>
     <lastmod>2017-07-19T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>/blog/categories/r/</loc>
+    <loc>/tags/r/</loc>
     <lastmod>2017-07-19T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>/blog/tags/r/</loc>
+    <loc>/categories/r/</loc>
     <lastmod>2017-07-19T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>/blog/tags/r-markdown/</loc>
+    <loc>/tags/r-markdown/</loc>
     <lastmod>2015-07-23T21:13:14-05:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>/blog/tags/regression/</loc>
+    <loc>/tags/regression/</loc>
     <lastmod>2015-07-23T21:13:14-05:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>/blog/tags/</loc>
+    <loc>/tags/</loc>
     <lastmod>2017-07-19T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>

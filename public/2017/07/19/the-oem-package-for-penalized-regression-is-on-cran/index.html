@@ -8,17 +8,17 @@
 		
 		<meta name="generator" content="Hugo 0.30.2" />
 		<title>The oem package for penalized regression is on CRAN &middot; Jared Huling</title>
-		<link rel="shortcut icon" href="/blog/images/favicon.ico">
-		<link rel="stylesheet" href="/blog/css/style.css">
-		<link rel="stylesheet" href="/blog/css/highlight.css">
+		<link rel="shortcut icon" href="../../../../images/favicon.ico">
+		<link rel="stylesheet" href="../../../../css/style.css">
+		<link rel="stylesheet" href="../../../../css/highlight.css">
 		
 
 		
-		<link rel="stylesheet" href="/blog/css/monosocialiconsfont.css">
+		<link rel="stylesheet" href="../../../../css/monosocialiconsfont.css">
 		
 
 		
-		<link href="/blog/feed.xml" rel="alternate" type="application/rss+xml" title="Jared Huling" />
+		<link href="../../../../feed.xml" rel="alternate" type="application/rss+xml" title="Jared Huling" />
 		
 		
 		
@@ -54,16 +54,16 @@
        <nav class="main-nav">
 	
 	
-		<a href='/blog/'> <span class="arrow">←</span>Home</a>
+		<a href='../../../../'> <span class="arrow">←</span>Home</a>
 	
-	<a href='/blog/post'>Archive</a>
-	<a href='/blog/tags'>Tags</a>
-	<a href='/blog/about'>About</a>
+	<a href='../../../../post'>Archive</a>
+	<a href='../../../../tags'>Tags</a>
+	<a href='../../../../about'>About</a>
 
 	
 
 	
-	<a class="cta" href="/blog/feed.xml">Subscribe</a>
+	<a class="cta" href="../../../../feed.xml">Subscribe</a>
 	
 </nav>
 
@@ -82,13 +82,13 @@
                       
                       
                           
-                              <a href="/blog/tags/r">R</a>
+                              <a href="../../../../tags/r">R</a>
                           
-                              <a href="/blog/tags/c&#43;&#43;">C&#43;&#43;</a>
+                              <a href="../../../../tags/c&#43;&#43;">C&#43;&#43;</a>
                           
-                              <a href="/blog/tags/computational-statistics">computational-statistics</a>
+                              <a href="../../../../tags/computational-statistics">computational-statistics</a>
                           
-                              <a href="/blog/tags/machine-learning">machine-learning</a>
+                              <a href="../../../../tags/machine-learning">machine-learning</a>
                           
                       
                       
@@ -151,7 +151,7 @@ y &lt;- drop(x %*% c(0.5, 0.5, -0.5, -0.5, 1, rep(0, nvars - 5))) + rnorm(nobs, 
 <pre><code class="language-r">plot(fit1)
 </code></pre>
 
-<p><img src="/images/2017-07-19-oem_cran-unnamed-chunk-7-1.png" alt="center" /></p>
+<p><img src="../../../../images/2017-07-19-oem_cran-unnamed-chunk-7-1.png" alt="center" /></p>
 
 <h1 id="key-features">Key Features</h1>
 
@@ -241,7 +241,7 @@ plot(fit2, which.model = 3, xvar = &quot;lambda&quot;)
 plot(fit2, which.model = &quot;grp.mcp&quot;, xvar = &quot;lambda&quot;)
 </code></pre>
 
-<p><img src="/post/2017-07-19-oem_cran_files/2017-07-19-oem_cran-unnamed-chunk-9-1.png" alt="center" /></p>
+<p><img src="../../../../post/2017-07-19-oem_cran_files/2017-07-19-oem_cran-unnamed-chunk-9-1.png" alt="center" /></p>
 
 <h2 id="timing-comparison">Timing Comparison</h2>
 
@@ -341,7 +341,7 @@ plot(cvfit1, which.model = 3)
 plot(cvfit1, which.model = 4)
 </code></pre>
 
-<p><img src="/post/2017-07-19-oem_cran_files/2017-07-19-oem_cran-unnamed-chunk-13-1.png" alt="center" /></p>
+<p><img src="../../../../post/2017-07-19-oem_cran_files/2017-07-19-oem_cran-unnamed-chunk-13-1.png" alt="center" /></p>
 
 <h2 id="extremely-fast-cross-validation-for-linear-models">Extremely Fast Cross Validation for Linear Models</h2>
 
@@ -429,7 +429,7 @@ y &lt;- rbinom(nobs, 1, prob = 1 / (1 + exp(-drop(x %*% c(0.25, -1, -1, -0.5, -0
                  nfolds = 10, standardize = FALSE)
 </code></pre>
 
-<p><img src="/post/2017-07-19-oem_cran_files/2017-07-19-oem_cran-unnamed-chunk-17-1.png" alt="center" /></p>
+<p><img src="../../../../post/2017-07-19-oem_cran_files/2017-07-19-oem_cran-unnamed-chunk-17-1.png" alt="center" /></p>
 
 <p>In this case, misclassification rate is not the best indicator of performance. The classes here are imbalanced:</p>
 
@@ -452,7 +452,7 @@ y &lt;- rbinom(nobs, 1, prob = 1 / (1 + exp(-drop(x %*% c(0.25, -1, -1, -0.5, -0
                  nfolds = 10, standardize = FALSE)
 </code></pre>
 
-<p><img src="/post/2017-07-19-oem_cran_files/2017-07-19-oem_cran-unnamed-chunk-20-1.png" alt="center" /></p>
+<p><img src="../../../../post/2017-07-19-oem_cran_files/2017-07-19-oem_cran-unnamed-chunk-20-1.png" alt="center" /></p>
 
 <h1 id="methods-for-very-large-scale-problems">Methods for Very Large Scale Problems</h1>
 
@@ -600,7 +600,7 @@ fit.adaptive.grp &lt;- oem(x = x, y = y, penalty = c(&quot;grp.lasso&quot;),
                         lambda = lams)
 </code></pre>
 
-<p><img src="/post/2017-07-19-oem_cran_files/2017-07-19-oem_cran-unnamed-chunk-25-1.png" alt="center" /></p>
+<p><img src="../../../../post/2017-07-19-oem_cran_files/2017-07-19-oem_cran-unnamed-chunk-25-1.png" alt="center" /></p>
 
 <h1 id="more-information">More Information</h1>
 
@@ -653,9 +653,9 @@ please visit:</p>
 
         </section>
 
-        <script src="/blog/js/jquery-2.2.4.min.js"></script>
-<script src="/blog/js/main.js"></script>
-<script src="/blog/js/highlight.min.js"></script>
+        <script src="../../../../js/jquery-2.2.4.min.js"></script>
+<script src="../../../../js/main.js"></script>
+<script src="../../../../js/highlight.min.js"></script>
 <script>hljs.initHighlightingOnLoad();</script>
 
 
