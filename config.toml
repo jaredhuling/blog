@@ -24,6 +24,9 @@ enableEmoji = true
 	# Enter optionally your twitter account
 	#twitter = "Your Twitter account"
 	enableRSS = true
+	
+	fullURL = "http://jaredhuling.org/blog"
+    githubContentURL = "https://github.com/jaredhuling/blog/edit/source/content/"
 
 	# Integrate Javascript files or stylesheets by adding the url to the external assets or by
 	# linking local files with their path relative to the static folder, e.g. "css/styles.css"
