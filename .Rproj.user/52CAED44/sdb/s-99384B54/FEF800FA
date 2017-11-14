@@ -1,0 +1,20 @@
+{
+    "collab_server" : "",
+    "contents" : "<!DOCTYPE html>\n<html {{ with .Site.LanguageCode }}lang=\"{{ . }}\"{{ end }}>\n\t<head>\n\t\t<meta charset=\"utf-8\">\n\t\t<meta http-equiv=\"X-UA-Compatible\" content=\"IE=edge,chrome=1\">\n\t\t<meta name=\"viewport\" content=\"width=device-width, initial-scale=1\">\n\t\t{{ with .Site.Params.name }}<meta name=\"author\" content=\"{{ . }}\">{{ end }}\n\t\t{{ with .Site.Params.description }}<meta name=\"description\" content=\"{{ . }}\">{{ end }}\n\t\t{{ .Hugo.Generator }}\n\t\t<title>{{ if .IsHome }}{{ .Title }}{{ else }}{{ .Title }} &middot; {{ .Site.Title }}{{ end }}</title>\n\t\t<link rel=\"shortcut icon\" href=\"{{ .Site.BaseURL }}images/favicon.ico\">\n\t\t<link rel=\"stylesheet\" href=\"{{ .Site.BaseURL }}css/style.css\">\n\t\t<link rel=\"stylesheet\" href=\"{{ .Site.BaseURL }}css/highlight.css\">\n\t\t{{ range .Site.Params.customCSS }}\n\t\t<link rel=\"stylesheet\" href=\"{{ $.Site.BaseURL }}{{ . }}\">\n\t\t{{ end }}\n\n\t\t{{ if eq .Site.Params.iconFont \"font-awesome\" }}\n\t\t<link rel=\"stylesheet\" href=\"{{ .Site.BaseURL }}css/font-awesome.min.css\">\n\t\t{{ else }}\n\t\t<link rel=\"stylesheet\" href=\"{{ .Site.BaseURL }}css/monosocialiconsfont.css\">\n\t\t{{ end }}\n\n\t\t{{ if .Site.Params.enableRSS }}\n\t\t<link href=\"{{ .Site.RSSLink }}\" rel=\"alternate\" type=\"application/rss+xml\" title=\"{{ .Site.Title }}\" />\n\t\t{{ end }}\n\t\t\n\t\t{{ partial \"footer_mathjax\" . }}\n\t</head>\n",
+    "created" : 1510682450938.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "3120025233",
+    "id" : "FEF800FA",
+    "lastKnownWriteTime" : 1510682494,
+    "last_content_update" : 1510682494328,
+    "path" : "~/github/blog/themes/hugo-theme-cactus-plus/layouts/partials/head.html",
+    "project_path" : "themes/hugo-theme-cactus-plus/layouts/partials/head.html",
+    "properties" : {
+    },
+    "relative_order" : 7,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "html"
+}

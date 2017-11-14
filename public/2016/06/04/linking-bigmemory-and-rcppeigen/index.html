@@ -1,0 +1,405 @@
+    <!DOCTYPE html>
+<html lang="en-us">
+	<head>
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<meta name="author" content="Jared Huling">
+		
+		<meta name="generator" content="Hugo 0.30.2" />
+		<title>Linking bigmemory and RcppEigen &middot; Jared Huling</title>
+		<link rel="shortcut icon" href="/images/favicon.ico">
+		<link rel="stylesheet" href="/css/style.css">
+		<link rel="stylesheet" href="/css/highlight.css">
+		
+
+		
+		<link rel="stylesheet" href="/css/monosocialiconsfont.css">
+		
+
+		
+		<link href="/feed.xml" rel="alternate" type="application/rss+xml" title="Jared Huling" />
+		
+		
+		
+
+    <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        inlineMath: [['$','$'], ['\\(','\\)']],
+        displayMath: [['$$','$$'], ['\[','\]']],
+        processEscapes: true,
+        processEnvironments: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre'],
+        TeX: { equationNumbers: { autoNumber: "AMS" },
+             extensions: ["AMSmath.js", "AMSsymbols.js"] }
+      }
+    });
+    </script>
+    
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        // Fix <code> tags after MathJax finishes running. This is a
+        // hack to overcome a shortcoming of Markdown. Discussion at
+        // https://github.com/mojombo/jekyll/issues/199
+        var all = MathJax.Hub.getAllJax(), i;
+        for(i = 0; i &lt; all.length; i += 1) {
+            all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+    </script>
+	</head>
+
+    <body>
+       <nav class="main-nav">
+	
+	
+		<a href='/'> <span class="arrow">←</span>Home</a>
+	
+	<a href='/post'>Archive</a>
+	<a href='/tags'>Tags</a>
+	<a href='/about'>About</a>
+
+	
+
+	
+	<a class="cta" href="/feed.xml">Subscribe</a>
+	
+</nav>
+
+
+        <section id="wrapper">
+            <article class="post">
+                <header>
+                    <h1>
+                        Linking bigmemory and RcppEigen
+                    </h1>
+                    <h2 class="headline">
+                    Jun 4, 2016 00:00
+                    · 986 words
+                    · 5 minutes read
+                      <span class="tags">
+                      
+                      
+                          
+                              <a href="/tags/r">R</a>
+                          
+                              <a href="/tags/c&#43;&#43;">C&#43;&#43;</a>
+                          
+                              <a href="/tags/eigen">Eigen</a>
+                          
+                      
+                      
+                      </span>
+                    </h2>
+                </header>
+                
+                <section id="post-body">
+                    
+
+<p>The <a href="www.bigmemory.org">bigmemory</a> <a href="https://cran.r-project.org/web/packages/bigmemory/index.html">package</a> offers a set of tools for R which allow for manipulation larger-than-memory objects within R. It has some basic functions but is certainly not comprehensive. The <a href="http://eigen.tuxfamily.org/index.php?title=Main_Page">eigen</a> C++ linear algebra library is a highly efficient numerical linear algebra library and can be interfaced to R through  <a href="http://cran.r-project.org/web/packages/RcppEigen/index.html">RcppEigen</a> by Douglas Bates and Dirk Eddelbuettel. If bigmemory and Eigen can be linked, then one would be able to do highly efficient linear algebra computation on data that is too big for memory (exactly what you thought R couldn&rsquo;t do).</p>
+
+<p>Since bigmemory works with pointers to C++ objects, it&rsquo;s natural to link bigmemory objects to Eigen matrix objects. I&rsquo;m not going to go too much into the details of this from the bigmemory/Rcpp side of things, as it&rsquo;s well exposed <a href="http://gallery.rcpp.org/articles/using-bigmemory-with-rcpp/">here</a>.</p>
+
+<p>In this post I&rsquo;ll create a <code>colSums()</code> function and a <code>crossprod()</code> function for <code>big.matrix</code> objects. All of the code posted below can be found in my <a href="https://github.com/jaredhuling/rfunctions">rfunctions</a> R package on github.  <code>big.matrix</code> objects can have one of 4 types (1, 2, 4, 8), corresponding to (char, short, int, double), so we need to define extra Eigen matrix types like the following <code>MatrixXi</code>/<code>VectorXi</code> for ints and <code>MatrixXd</code>/<code>VectorXd</code> for doubles are already defined):</p>
+
+<p>{% highlight cpp %}
+typedef Eigen::Matrix<char, Eigen::Dynamic, Eigen::Dynamic> MatrixXchar;
+typedef Eigen::Matrix<short, Eigen::Dynamic, Eigen::Dynamic> MatrixXshort;
+typedef Eigen::Matrix<char, Eigen::Dynamic, 1> Vectorchar;
+typedef Eigen::Matrix<short, Eigen::Dynamic, 1> Vectorshort;
+{% endhighlight %}</p>
+
+<p>Then ``reading&rdquo; in a big.matrix object from R to C++ and getting its data type looks like the following:</p>
+
+<p>{% highlight cpp %}
+using namespace Rcpp;
+using namespace RcppEigen;
+#include <bigmemory/BigMatrix.h></p>
+
+<p>RcppExport SEXP colsums<em>big(SEXP X</em>)
+{
+  BEGIN_RCPP
+    using Eigen::Map;
+    using Eigen::MatrixXd;
+    using Eigen::VectorXd;</p>
+
+<pre><code>typedef Eigen::Matrix&lt;char, Eigen::Dynamic, Eigen::Dynamic&gt; MatrixXchar;
+typedef Eigen::Matrix&lt;short, Eigen::Dynamic, Eigen::Dynamic&gt; MatrixXshort;
+typedef Eigen::Matrix&lt;char, Eigen::Dynamic, 1&gt; Vectorchar;
+typedef Eigen::Matrix&lt;short, Eigen::Dynamic, 1&gt; Vectorshort;
+
+XPtr&lt;BigMatrix&gt; xpMat(X_);
+
+unsigned int type = xpMat-&gt;matrix_type();
+</code></pre>
+
+<p>END_RCPP
+}</p>
+
+<p>{% endhighlight %}</p>
+
+<p>Then in order to associate the data from <code>xpMat</code> with an Eigen matrix object, we use the Eigen <code>map</code> (<a href="https://eigen.tuxfamily.org/dox/group__TutorialMapClass.html">map</a>)functionality to map the big.matrix data into an Eigen object (without copying it and hence loading it to memory). For data with the double type, this looks like:</p>
+
+<p>{% highlight cpp %}
+Map<MatrixXd> bM = Map<MatrixXd>((double *)xpMat-&gt;matrix(), xpMat-&gt;nrow(), xpMat-&gt;ncol()  );
+{% endhighlight %}</p>
+
+<p>where <code>bM</code> is the new Eigen object pointing to the big.matrix data located on disk. Now we are basically done. Performing the column-wise sum in Eigen is straightforward:</p>
+
+<p>{% highlight cpp %}
+VectorXd colSums = bM.colwise().sum();
+return wrap(colSums);
+{% endhighlight %}</p>
+
+<p>Putting it altogether:</p>
+
+<p>{% highlight cpp %}
+using namespace Rcpp;
+using namespace RcppEigen;
+#include <bigmemory/BigMatrix.h></p>
+
+<p>RcppExport SEXP colsums<em>big(SEXP X</em>)
+{
+  BEGIN_RCPP
+    using Eigen::Map;
+    using Eigen::MatrixXd;
+    using Eigen::VectorXd;</p>
+
+<pre><code>typedef Eigen::Matrix&lt;char, Eigen::Dynamic, Eigen::Dynamic&gt; MatrixXchar;
+typedef Eigen::Matrix&lt;short, Eigen::Dynamic, Eigen::Dynamic&gt; MatrixXshort;
+typedef Eigen::Matrix&lt;char, Eigen::Dynamic, 1&gt; Vectorchar;
+typedef Eigen::Matrix&lt;short, Eigen::Dynamic, 1&gt; Vectorshort;
+
+XPtr&lt;BigMatrix&gt; xpMat(X_);
+
+unsigned int type = xpMat-&gt;matrix_type();
+
+if (type == 1) 
+{
+  Map&lt;MatrixXchar&gt; bM = Map&lt;MatrixXchar&gt;((char *)xpMat-&gt;matrix(), xpMat-&gt;nrow(), xpMat-&gt;ncol()  );
+  Vectorchar colSums = bM.colwise().sum();
+  return wrap(colSums);
+} else if (type == 2) 
+{
+  Map&lt;MatrixXshort&gt; bM = Map&lt;MatrixXshort&gt;((short *)xpMat-&gt;matrix(), xpMat-&gt;nrow(), xpMat-&gt;ncol()  );
+  Vectorshort colSums = bM.colwise().sum();
+  return wrap(colSums);
+} else if (type == 4) 
+{
+  Map&lt;MatrixXi&gt; bM = Map&lt;MatrixXi&gt;((int *)xpMat-&gt;matrix(), xpMat-&gt;nrow(), xpMat-&gt;ncol()  );
+  VectorXi colSums = bM.colwise().sum();
+  return wrap(colSums);
+} else if (type == 8) 
+{
+  Map&lt;MatrixXd&gt; bM = Map&lt;MatrixXd&gt;((double *)xpMat-&gt;matrix(), xpMat-&gt;nrow(), xpMat-&gt;ncol()  );
+  VectorXd colSums = bM.colwise().sum();
+  return wrap(colSums);
+} else {
+  throw Rcpp::exception(&quot;Undefined type for provided big.matrix&quot;);
+}
+
+END_RCPP
+</code></pre>
+
+<p>}</p>
+
+<p>{% endhighlight %}</p>
+
+<p>If we want to make a <code>crossprod</code> function for <code>big.matrix</code> objects (ie computing $X^TX$), then we would do this with the following:</p>
+
+<p>{% highlight cpp %}
+int p = bM.cols();
+MatrixXi crossprod = MatrixXi(p, p).setZero().selfadjointView<a href="Eigen::Upper">Eigen::Upper</a>().rankUpdate( bM.adjoint() );
+return wrap(crossprod);
+{% endhighlight %}</p>
+
+<p>Now let&rsquo;s run a big example to demonstrate the performance. The R function which calls <code>colsums_big</code> is called <code>big.colSums()</code> and the corresponding crossprod function is called <code>big.crossprod()</code>. If we have a <code>big.matrix</code> object <code>big_mat</code>, then the data can be loaded into memory as a matrix as <code>big_mat[,]</code>, so we can compare with the standard R functions for <code>colSums</code> and <code>crossprod</code>.</p>
+
+<p>{% highlight r %}
+suppressMessages(library(bigmemory))
+suppressMessages(library(rfunctions))</p>
+
+<p>nrows &lt;- 500000
+ncols &lt;- 500
+bkFile &lt;- &ldquo;big_matrix.bk&rdquo;
+descFile &lt;- &ldquo;big_matrix.desc&rdquo;
+big_mat &lt;- filebacked.big.matrix(nrow=nrows, ncol=ncols, type=&ldquo;double&rdquo;,<br />
+                                backingfile=bkFile, backingpath=&ldquo;.&rdquo;,
+                                descriptorfile=descFile,
+                                dimnames=c(NULL,NULL))</p>
+
+<p>set.seed(123)
+for (i in 1:ncols) big_mat[,i] = rnorm(nrows, mean = 1/sqrt(i))*i</p>
+
+<p>library(microbenchmark)</p>
+
+<p>res &lt;- microbenchmark(cs1 &lt;- colSums(big_mat[,]),
+                      cs2 &lt;- big.colSums(big_mat),
+                      times = 25L)
+print(summary(res)[,1:7], digits = 5)
+{% endhighlight %}</p>
+
+<p>{% highlight text %}</p>
+
+<h2 id="expr-min-lq-mean-median-uq">expr     min      lq    mean  median      uq</h2>
+
+<h2 id="1-cs1-colsums-big-mat-1436-88-1602-95-1672-87-1692-14-1712-79">1 cs1 &lt;- colSums(big_mat[, ]) 1436.88 1602.95 1672.87 1692.14 1712.79</h2>
+
+<h2 id="2-cs2-big-colsums-big-mat-133-82-141-32-165-62-175-57-177-87">2 cs2 &lt;- big.colSums(big_mat)  133.82  141.32  165.62  175.57  177.87</h2>
+
+<h2 id="max">max</h2>
+
+<h2 id="1-1832-77">1 1832.77</h2>
+
+<h2 id="2-194-36">2  194.36</h2>
+
+<p>{% endhighlight %}</p>
+
+<p>{% highlight r %}
+all.equal(cs1, cs2)
+{% endhighlight %}</p>
+
+<p>{% highlight text %}</p>
+
+<h2 id="1-true">[1] TRUE</h2>
+
+<p>{% endhighlight %}</p>
+
+<p>The memory usage is obviously much lower when we don&rsquo;t load the big.matrix object into memory too.</p>
+
+<p>{% highlight r %}</p>
+
+<h2 id="memory-usage-of-loading-the-data">memory usage of loading the data</h2>
+
+<p>Rprof(&ldquo;base_mem.out&rdquo;, memory.profiling = TRUE)</p>
+
+<h1 id="call-the-function-to-be-profiled">Call the function to be profiled</h1>
+
+<p>cs1 &lt;- colSums(big_mat[,])
+Rprof(NULL)
+summaryRprof(&ldquo;base_mem.out&rdquo;, memory = &ldquo;stats&rdquo;)[[1]][4]
+{% endhighlight %}</p>
+
+<p>{% highlight text %}</p>
+
+<h2 id="max-vsize-large">max.vsize.large</h2>
+
+<h2 id="251370151">251370151</h2>
+
+<p>{% endhighlight %}</p>
+
+<p>{% highlight r %}
+gc()
+{% endhighlight %}</p>
+
+<p>{% highlight text %}</p>
+
+<h2 id="used-mb-gc-trigger-mb-max-used-mb">used (Mb) gc trigger   (Mb)  max used   (Mb)</h2>
+
+<h2 id="ncells-1448305-77-4-2637877-140-9-1901283-101-6">Ncells 1448305 77.4    2637877  140.9   1901283  101.6</h2>
+
+<h2 id="vcells-1974085-15-1-290521730-2216-6-252422069-1925-9">Vcells 1974085 15.1  290521730 2216.6 252422069 1925.9</h2>
+
+<p>{% endhighlight %}</p>
+
+<p>{% highlight r %}
+Rprof(&ldquo;eigen_mem.out&rdquo;, memory.profiling = TRUE)</p>
+
+<h1 id="call-the-function-to-be-profiled-1">Call the function to be profiled</h1>
+
+<p>cs2 &lt;- big.colSums(big_mat)
+Rprof(NULL)
+summaryRprof(&ldquo;eigen_mem.out&rdquo;, memory = &ldquo;stats&rdquo;)[[1]][4]
+{% endhighlight %}</p>
+
+<p>{% highlight text %}</p>
+
+<h2 id="max-vsize-large-1">max.vsize.large</h2>
+
+<h2 id="1045228">1045228</h2>
+
+<p>{% endhighlight %}</p>
+
+<p>{% highlight r %}
+res &lt;- microbenchmark(cp1 &lt;- crossprod(big_mat[,]),
+                      cp2 &lt;- big.crossprod(big_mat),
+                      times = 5L)
+print(summary(res)[,1:7], digits = 4)
+{% endhighlight %}</p>
+
+<p>{% highlight text %}</p>
+
+<h2 id="expr-min-lq-mean-median-uq-max">expr   min    lq  mean median    uq   max</h2>
+
+<h2 id="1-cp1-crossprod-big-mat-81-14-81-17-86-40-87-78-88-40-93-49">1 cp1 &lt;- crossprod(big_mat[, ]) 81.14 81.17 86.40  87.78 88.40 93.49</h2>
+
+<h2 id="2-cp2-big-crossprod-big-mat-14-07-14-10-14-99-14-10-14-13-18-55">2 cp2 &lt;- big.crossprod(big_mat) 14.07 14.10 14.99  14.10 14.13 18.55</h2>
+
+<p>{% endhighlight %}</p>
+
+<p>{% highlight r %}
+all.equal(cp1, cp2)
+{% endhighlight %}</p>
+
+<p>{% highlight text %}</p>
+
+<h2 id="1-true-1">[1] TRUE</h2>
+
+<p>{% endhighlight %}</p>
+
+<p>In a following post I&rsquo;ll investigate fitting linear models via Eigen and bigmemory <code>big.matrix</code> objects and see how the speed compares with the <a href="https://cran.r-project.org/web/packages/biglm/index.html">biglm</a> package.</p>
+
+                </section>
+            </article>
+
+            
+
+            
+
+            
+
+            <footer id="footer">
+    
+        <div id="social">
+
+	
+	
+    
+    <a class="symbol" href="https://www.github.com/jaredhuling">
+        circlegithub
+    </a>
+    
+
+
+</div>
+
+    
+    <p class="small">
+    
+       © Copyright 2017 <i class="fa fa-heart" aria-hidden="true"></i> Jared Huling
+    
+    </p>
+    <p class="small">
+        Powered by <a href="http://www.gohugo.io/">Hugo</a> Theme By <a href="https://github.com/nodejh/hugo-theme-cactus-plus">nodejh</a>
+    </p>
+</footer>
+
+
+
+
+        </section>
+
+        <script src="/js/jquery-2.2.4.min.js"></script>
+<script src="/js/main.js"></script>
+<script src="/js/highlight.min.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
+
+
+
+
+
+
+
+    </body>
+</html>

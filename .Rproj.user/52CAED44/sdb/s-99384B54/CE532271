@@ -1,0 +1,20 @@
+{
+    "collab_server" : "",
+    "contents" : "<footer id=\"footer\">\n    {{ if .Site.Social }}\n        {{ partial \"social.html\" . }}\n    {{ end }}\n    <p class=\"small\">\n    {{ with .Site.Params.copyright }}\n        {{ . | markdownify }}\n    {{ else }}\n       © Copyright {{ now.Format \"2006\"}} <i class=\"fa fa-heart\" aria-hidden=\"true\"></i> {{ .Site.Params.name }}\n    {{ end }}\n    </p>\n    <p class=\"small\">\n        Powered by <a href=\"http://www.gohugo.io/\">Hugo</a> Theme By <a href=\"https://github.com/nodejh/hugo-theme-cactus-plus\">nodejh</a>\n    </p>\n</footer>\n\n\n\n",
+    "created" : 1510680044056.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "3633448780",
+    "id" : "CE532271",
+    "lastKnownWriteTime" : 1510682669,
+    "last_content_update" : 1510682669127,
+    "path" : "~/github/blog/themes/hugo-theme-cactus-plus/layouts/partials/footer.html",
+    "project_path" : "themes/hugo-theme-cactus-plus/layouts/partials/footer.html",
+    "properties" : {
+    },
+    "relative_order" : 4,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "html"
+}

@@ -1,0 +1,20 @@
+{
+    "collab_server" : "",
+    "contents" : "# Site settings\nbaseurl = \"https://jaredhuling.org/\"\nthemesDir = \"themes\"\nlanguageCode = \"en-us\"\ntitle = \"Jared Huling\"\ntheme = \"hugo-theme-cactus-plus\"\n# Enter your tracking code to enable Google Analytics\ngoogleAnalytics = \"UA-49091606-1\"\n# Disable comments by leaving disqusShortname empty\ndisqusShortname = \"\"\n\n\n# Added to theme\nignoreFiles = [\"\\\\.Rmd$\", \"\\\\.Rmarkdown$\", \"_files$\", \"_cache$\"]\nenableEmoji = true\n[permalinks]\n    post = \"/:year/:month/:day/:title/\"\n\n[params]\n\tname = \"Jared Huling\"\n\t#description = \"Describe your website\"\n\t#bio = \"Blogger & Programmer\"\n\t# Enter optionally your twitter account\n\t#twitter = \"Your Twitter account\"\n\tenableRSS = true\n\n\t# Integrate Javascript files or stylesheets by adding the url to the external assets or by\n\t# linking local files with their path relative to the static folder, e.g. \"css/styles.css\"\n\tcustomCSS = []\n\tcustomJS  = []\n\n\t# The variables below are optionally too and can be used to\n\t# translate or customize each string of the theme.\n\n    MathJaxCDN = \"//cdn.bootcss.com\"\n    MathJaxVersion = \"2.7.1\"\n\n\t# Navigation links\n\thome = \"\"\n\tsubscribe = \"\"\n\t# Pagination links\n\tolderPosts = \"\"\n\tnewerPosts = \"\"\n\treadMore = \"\"\n\tcopyright = \"\"\n\t# Sharing options and author information in posts\n\t#aboutAuthor = \"I'm an blogger.\"\n\ttweet = \"\"\n\tshare = \"\"\n\t# 404 page\n\ttitle404 = \"\"\n\tsubtitle404 = \"\"\n\n\t# Choose a font for the social icons in the footer. Either \"mono-social\" or \"font-awesome\"\n\ticonFont = \"mono-social\"\n    # The social icons can be styled differently if you use mono as font - circle, rounded, or empty\n    socialIconStyle = \"circle\"\n\n# Add additional social link entries underneath\n[social]\n    #twitter  = \"https://www.twitter.com/\"\n    #facebook = \"https://www.facebook.com/\"\n    github   = \"https://www.github.com/jaredhuling\"\n    #dribble  = \"https://www.dribbble.com/\"\n\n[outputs]\nhome = [ \"HTML\", \"RSS\", \"RFEED\"]\n\n[outputFormats]\n[outputFormats.RSS]\nmediatype = \"application/rss\"\nbaseName = \"feed\"\n\n[outputFormats.RFEED]\nmediatype = \"application/rss\"\nbaseName = \"feed_r\"\nnoUgly = true\n",
+    "created" : 1510628624974.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "1971388047",
+    "id" : "D35AC736",
+    "lastKnownWriteTime" : 1510682275,
+    "last_content_update" : 1510682275019,
+    "path" : "~/github/blog/config.toml",
+    "project_path" : "config.toml",
+    "properties" : {
+    },
+    "relative_order" : 1,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "text"
+}
