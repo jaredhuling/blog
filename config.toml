@@ -1,5 +1,5 @@
 # Site settings
-baseurl = "https://jaredhuling.org/blog/"
+baseurl = "http://jaredhuling.org/blog/"
 relativeurls = true
 themesDir = "themes"
 languageCode = "en-us"
