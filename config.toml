@@ -4,7 +4,7 @@ relativeurls = true
 themesDir = "themes"
 languageCode = "en-us"
 title = "Jared Huling"
-theme = "hugo-theme-cactus-plus"
+theme = "hugo-lithium-theme"
 # Enter your tracking code to enable Google Analytics
 googleAnalytics = "UA-49091606-1"
 # Disable comments by leaving disqusShortname empty
@@ -31,8 +31,13 @@ enableEmoji = true
 
 	# Integrate Javascript files or stylesheets by adding the url to the external assets or by
 	# linking local files with their path relative to the static folder, e.g. "css/styles.css"
-	customCSS = []
-	customJS  = []
+	#customCSS = []
+	#customJS  = []
+	
+	highlightjsVersion = "9.11.0"
+    highlightjsCDN = "//cdn.bootcss.com"
+    highlightjsLang = ["r", "yaml"]
+    highlightjsTheme = "arta"
 
 	# The variables below are optionally too and can be used to
 	# translate or customize each string of the theme.

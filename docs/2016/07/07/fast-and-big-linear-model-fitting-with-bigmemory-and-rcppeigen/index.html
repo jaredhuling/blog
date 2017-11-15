@@ -1,101 +1,66 @@
-    <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en-us">
-	<head>
-		<meta charset="utf-8">
-		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-		<meta name="viewport" content="width=device-width, initial-scale=1">
-		<meta name="author" content="Jared Huling">
-		
-		<meta name="generator" content="Hugo 0.30.2" />
-		<title>Fast and Big Linear Model Fitting with bigmemory and RcppEigen &middot; Jared Huling</title>
-		<link rel="shortcut icon" href="../../../../images/favicon.ico">
-		<link rel="stylesheet" href="../../../../css/style.css">
-		<link rel="stylesheet" href="../../../../css/highlight.css">
-		
+  <head>
+    <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="generator" content="Hugo 0.30.2" />
 
-		
-		<link rel="stylesheet" href="../../../../css/monosocialiconsfont.css">
-		
 
-		
-		<link href="../../../../feed.xml" rel="alternate" type="application/rss+xml" title="Jared Huling" />
-		
-		
-		
+<title>Fast and Big Linear Model Fitting with bigmemory and RcppEigen - Jared Huling</title>
+<meta property="og:title" content="Fast and Big Linear Model Fitting with bigmemory and RcppEigen - Jared Huling">
 
-    <script type="text/x-mathjax-config">
-    MathJax.Hub.Config({
-      tex2jax: {
-        inlineMath: [['$','$'], ['\\(','\\)']],
-        displayMath: [['$$','$$'], ['\[','\]']],
-        processEscapes: true,
-        processEnvironments: true,
-        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre'],
-        TeX: { equationNumbers: { autoNumber: "AMS" },
-             extensions: ["AMSmath.js", "AMSsymbols.js"] }
-      }
-    });
-    </script>
+
+
+  
+
+
+
+
+
+
+
+<link rel="stylesheet" href="../../../../css/fonts.css" media="all">
+<link rel="stylesheet" href="../../../../css/main.css" media="all">
+
+
+
+  </head>
+  <body>
+    <div class="wrapper">
+      <header class="header">
+        <nav class="nav">
+  <a href="../../../../" class="nav-logo">
+    <img src="../../../../images/%3cnil%3e"
+         width=""
+         height=""
+         alt="">
+  </a>
+
+  <ul class="nav-links">
     
-    <script type="text/x-mathjax-config">
-      MathJax.Hub.Queue(function() {
-        // Fix <code> tags after MathJax finishes running. This is a
-        // hack to overcome a shortcoming of Markdown. Discussion at
-        // https://github.com/mojombo/jekyll/issues/199
-        var all = MathJax.Hub.getAllJax(), i;
-        for(i = 0; i &lt; all.length; i += 1) {
-            all[i].SourceElement().parentNode.className += ' has-jax';
-        }
-    });
-    </script>
-	</head>
-
-    <body>
-       <nav class="main-nav">
-	
-	
-		<a href='../../../../'> <span class="arrow">←</span>Home</a>
-	
-	<a href='../../../../post'>Archive</a>
-	<a href='../../../../tags'>Tags</a>
-	<a href='../../../../about'>About</a>
-
-	
-
-	
-	<a class="cta" href="../../../../feed.xml">Subscribe</a>
-	
+    <li><a href="../../../../about/">About</a></li>
+    
+  </ul>
 </nav>
 
+      </header>
 
-        <section id="wrapper">
-            <article class="post">
-                <header>
-                    <h1>
-                        Fast and Big Linear Model Fitting with bigmemory and RcppEigen
-                    </h1>
-                    <h2 class="headline">
-                    Jul 7, 2016 00:00
-                    · 1185 words
-                    · 6 minutes read
-                      <span class="tags">
-                      
-                      
-                          
-                              <a href="../../../../tags/r">R</a>
-                          
-                              <a href="../../../../tags/c&#43;&#43;">C&#43;&#43;</a>
-                          
-                              <a href="../../../../tags/eigen">Eigen</a>
-                          
-                      
-                      
-                      </span>
-                    </h2>
-                </header>
-                
-                <section id="post-body">
-                    
+
+<main class="content" role="main">
+
+  <article class="article">
+    
+    <span class="article-duration">6 min read</span>
+    
+
+    <h1 class="article-title">Fast and Big Linear Model Fitting with bigmemory and RcppEigen</h1>
+
+    
+    <span class="article-date">2016/07/07</span>
+    
+
+    <div class="article-content">
+      
 
 <p>In a previous <a href="http://casualinference.org/2016/06/04/bigmemory_rcppeigen/">post</a>, I went over the basics of linking up <a href="http://www.bigmemory.org">bigmemory</a> and the <a href="http://eigen.tuxfamily.org/index.php?title=Main_Page">eigen</a> C++ library via <a href="http://cran.r-project.org/web/packages/RcppEigen/index.html">RcppEigen</a>. In this post I&rsquo;ll take this a bit further by creating a version of the <code>fastLm()</code> function of RcppEigen that can accept bigmemory objects. By doing so, we will create a fast way to fit linear models using data which is too big to fit in RAM. With RcppEigen, fitting linear models using out-of-memory computation doesn&rsquo;t have to be slow. The code for this is all on github in the <a href="https://github.com/jaredhuling/bigFastlm">bigFastlm</a> package.</p>
 
@@ -319,56 +284,41 @@ max(abs(coef(fastLm.obj.llt) - coef(bigLm.obj.llt)))
 
 <p>Future work would be to try to figure out how to make the QR decomposition memory-feasible and also to write a function for generalized linear models.</p>
 
-                </section>
-            </article>
+    </div>
+  </article>
 
-            
+  
 
-            
 
-            
+</main>
 
-            <footer id="footer">
+      <footer class="footer">
+        <ul class="footer-links">
+          <li>
+            <a href="../../../../feed.xml" type="application/rss+xml" target="_blank">RSS feed</a>
+          </li>
+          <li>
+            <a href="https://gohugo.io/" class="footer-links-kudos">Made with <img src="../../../../images/hugo-logo.png" width="22" height="22"></a>
+          </li>
+        </ul>
+      </footer>
+
+    </div>
     
-        <div id="social">
-
-	
-	
-    
-    <a class="symbol" href="https://www.github.com/jaredhuling">
-        circlegithub
-    </a>
-    
-
-
-</div>
 
     
-    <p class="small">
+
     
-       © Copyright 2017 <i class="fa fa-heart" aria-hidden="true"></i> Jared Huling
-    
-    </p>
-    <p class="small">
-        Powered by <a href="http://www.gohugo.io/">Hugo</a> Theme By <a href="https://github.com/nodejh/hugo-theme-cactus-plus">nodejh</a>
-    </p>
-</footer>
+<script>
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
 
+ga('create', 'UA-49091606-1', 'auto');
+ga('send', 'pageview');
+</script>
 
-
-
-        </section>
-
-        <script src="../../../../js/jquery-2.2.4.min.js"></script>
-<script src="../../../../js/main.js"></script>
-<script src="../../../../js/highlight.min.js"></script>
-<script>hljs.initHighlightingOnLoad();</script>
-
-
-
-
-
-
-
-    </body>
+  </body>
 </html>
+
