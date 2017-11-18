@@ -4,3 +4,6 @@
 .Ruserdata
 .Rproj.user/*
 blog.Rproj
+.DS_Store
+*.bk
+*.desc

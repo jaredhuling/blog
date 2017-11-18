@@ -1,5 +1,5 @@
 ---
-layout: post
+date: 2016-06-04
 title: Linking bigmemory and RcppEigen
 tags: [R, C++, Eigen]
 ---

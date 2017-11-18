@@ -22,11 +22,11 @@
     
     <item>
       <title>Fast and Big Linear Model Fitting with bigmemory and RcppEigen</title>
-      <link>/2016/07/07/fast-and-big-linear-model-fitting-with-bigmemory-and-rcppeigen/</link>
-      <pubDate>Thu, 07 Jul 2016 00:00:00 +0000</pubDate>
+      <link>/2016/07/06/fast-and-big-linear-model-fitting-with-bigmemory-and-rcppeigen/</link>
+      <pubDate>Wed, 06 Jul 2016 00:00:00 +0000</pubDate>
       
-      <guid>/2016/07/07/fast-and-big-linear-model-fitting-with-bigmemory-and-rcppeigen/</guid>
-      <description>In a previous post, I went over the basics of linking up bigmemory and the eigen C++ library via RcppEigen. In this post I&amp;rsquo;ll take this a bit further by creating a version of the fastLm() function of RcppEigen that can accept bigmemory objects. By doing so, we will create a fast way to fit linear models using data which is too big to fit in RAM. With RcppEigen, fitting linear models using out-of-memory computation doesn&amp;rsquo;t have to be slow.</description>
+      <guid>/2016/07/06/fast-and-big-linear-model-fitting-with-bigmemory-and-rcppeigen/</guid>
+      <description>In a previous post, I went over the basics of linking up bigmemory and the eigen C++ library via RcppEigen. In this post I’ll take this a bit further by creating a version of the fastLm() function of RcppEigen that can accept bigmemory objects. By doing so, we will create a fast way to fit linear models using data which is too big to fit in RAM. With RcppEigen, fitting linear models using out-of-memory computation doesn’t have to be slow.</description>
     </item>
     
     <item>
@@ -35,7 +35,7 @@
       <pubDate>Sat, 04 Jun 2016 00:00:00 +0000</pubDate>
       
       <guid>/2016/06/04/linking-bigmemory-and-rcppeigen/</guid>
-      <description>The bigmemory package offers a set of tools for R which allow for manipulation larger-than-memory objects within R. It has some basic functions but is certainly not comprehensive. The eigen C++ linear algebra library is a highly efficient numerical linear algebra library and can be interfaced to R through RcppEigen by Douglas Bates and Dirk Eddelbuettel. If bigmemory and Eigen can be linked, then one would be able to do highly efficient linear algebra computation on data that is too big for memory (exactly what you thought R couldn&amp;rsquo;t do).</description>
+      <description>The bigmemory package offers a set of tools for R which allow for manipulation larger-than-memory objects within R. It has some basic functions but is certainly not comprehensive. The eigen C++ linear algebra library is a highly efficient numerical linear algebra library and can be interfaced to R through RcppEigen by Douglas Bates and Dirk Eddelbuettel. If bigmemory and Eigen can be linked, then one would be able to do highly efficient linear algebra computation on data that is too big for memory (exactly what you thought R couldn’t do).</description>
     </item>
     
   </channel>

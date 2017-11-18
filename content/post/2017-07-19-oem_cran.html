@@ -1,71 +1,28 @@
-<!DOCTYPE html>
-<html lang="en-us">
-  <head>
-    <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="generator" content="Hugo 0.30.2" />
-
-
-<title>The oem package for penalized regression is on CRAN - Jared Huling</title>
-<meta property="og:title" content="The oem package for penalized regression is on CRAN - Jared Huling">
-
-
-
-  
-
-
-
-
-
-
-
-
-<link href='//cdn.bootcss.com/highlight.js/9.11.0/styles/arta.min.css' rel='stylesheet' type='text/css' />
-
-
-
-<link rel="stylesheet" href="../../../../css/fonts.css" media="all">
-<link rel="stylesheet" href="../../../../css/main.css" media="all">
+---
+date: 2017-07-19
+title: The oem package for penalized regression is on CRAN
+tags: [R, C++, computational-statistics, machine-learning]
+references:
+- id: xiong16
+  title: 'Orthogonalizing EM: A Design-Based Least Squares Algorithm'
+  author:
+  - family: Xiong
+    given: Shifeng
+  - family: Dai
+    given: Bin
+  - family: Huling
+    given: Jared
+  - family: Qian
+    given: Peter Z.G.
+  container-title: Technometrics, in press
+  type: article-journal
+  issued:
+    year: 2016
+---
 
 
 
-  </head>
-  <body>
-    <div class="wrapper">
-      <header class="header">
-        <nav class="nav">
-  <a href="../../../../" class="nav-logo">
-    <img src="../../../../images/%3cnil%3e"
-         width=""
-         height=""
-         alt="">
-  </a>
-
-  <ul class="nav-links">
-    
-    <li><a href="../../../../about/">About</a></li>
-    
-  </ul>
-</nav>
-
-      </header>
-
-
-<main class="content" role="main">
-
-  <article class="article">
-    
-    <span class="article-duration">12 min read</span>
-    
-
-    <h1 class="article-title">The oem package for penalized regression is on CRAN</h1>
-
-    
-    <span class="article-date">2017/07/19</span>
-    
-
-    <div class="article-content">
-      <p>The <a href="https://cran.r-project.org/package=oem">oem</a> package has been on CRAN for some time now, but with the latest update I expect few structural changes to the user interface. <code>oem</code> is a package for the estimation of various penalized regression models using the oem algorithm of <a href="http://amstat.tandfonline.com/doi/abs/10.1080/00401706.2015.1054436">Xiong et al. (2016)</a>. The focus of <code>oem</code> is to provide high performance computation for big <strong>tall</strong> data. Many applications not only have a large number of variables, but a vast number of observations; <code>oem</code> is designed to perform well in these settings.</p>
+<p>The <a href="https://cran.r-project.org/package=oem">oem</a> package has been on CRAN for some time now, but with the latest update I expect few structural changes to the user interface. <code>oem</code> is a package for the estimation of various penalized regression models using the oem algorithm of <a href="http://amstat.tandfonline.com/doi/abs/10.1080/00401706.2015.1054436">Xiong et al. (2016)</a>. The focus of <code>oem</code> is to provide high performance computation for big <strong>tall</strong> data. Many applications not only have a large number of variables, but a vast number of observations; <code>oem</code> is designed to perform well in these settings.</p>
 <ul>
 <li>Fast computation for big <strong>tall</strong> data</li>
 <li>Efficient computation for computation for multiple penalties simultaneously</li>
@@ -94,7 +51,7 @@ y &lt;- drop(x %*% c(0.5, 0.5, -0.5, -0.5, 1, rep(0, nvars - 5))) + rnorm(nobs, 
 <pre class="r"><code>fit1 &lt;- oem(x = x, y = y, penalty = &quot;lasso&quot;)</code></pre>
 <p>Plot the solution path</p>
 <pre class="r"><code>plot(fit1)</code></pre>
-<p><img src="../../../../post/2017-07-19-oem_cran_files/figure-html/unnamed-chunk-7-1.png" width="686.4" /></p>
+<p><img src="/post/2017-07-19-oem_cran_files/figure-html/unnamed-chunk-7-1.png" width="686.4" /></p>
 </div>
 <div id="key-features" class="section level1">
 <h1>Key Features</h1>
@@ -129,7 +86,7 @@ plot(fit2, which.model = 1, xvar = &quot;lambda&quot;)
 plot(fit2, which.model = 2, xvar = &quot;lambda&quot;)
 plot(fit2, which.model = 3, xvar = &quot;lambda&quot;)
 plot(fit2, which.model = &quot;grp.mcp&quot;, xvar = &quot;lambda&quot;)</code></pre>
-<p><img src="../../../../post/2017-07-19-oem_cran_files/figure-html/unnamed-chunk-9-1.png" width="686.4" /></p>
+<p><img src="/post/2017-07-19-oem_cran_files/figure-html/unnamed-chunk-9-1.png" width="686.4" /></p>
 <div id="timing-comparison" class="section level2">
 <h2>Timing Comparison</h2>
 <p>The following is a demonstration of oem’s efficiency for computing solutions for tuning parameter paths for multiple penalties at once.</p>
@@ -200,7 +157,7 @@ plot(cvfit1, which.model = 1)
 plot(cvfit1, which.model = 2)
 plot(cvfit1, which.model = 3)
 plot(cvfit1, which.model = 4)</code></pre>
-<p><img src="../../../../post/2017-07-19-oem_cran_files/figure-html/unnamed-chunk-13-1.png" width="686.4" /></p>
+<p><img src="/post/2017-07-19-oem_cran_files/figure-html/unnamed-chunk-13-1.png" width="686.4" /></p>
 <div id="extremely-fast-cross-validation-for-linear-models" class="section level2">
 <h2>Extremely Fast Cross Validation for Linear Models</h2>
 <p>The function <code>xval.oem</code> offers accelerated cross validation for penalized linear models. In many cases is is orders of magnitude faster than cv.oem. It is only recommended for scenarios where the number of observations is larger than the number of variables. In addition to the computational gains in single-core usage, it also benefits from parallelizaton using OpenMP (instead of using foreach, as used by cv.oem). For large enough problems, it has on a similar order of computation time as just fitting one OEM model.</p>
@@ -248,7 +205,7 @@ y &lt;- rbinom(nobs, 1, prob = 1 / (1 + exp(-drop(x %*% c(0.25, -1, -1, -0.5, -0
                  gamma = 2,
                  groups = rep(1:10, each = 2), 
                  nfolds = 10, standardize = FALSE)</code></pre>
-<p><img src="../../../../post/2017-07-19-oem_cran_files/figure-html/unnamed-chunk-17-1.png" width="686.4" /></p>
+<p><img src="/post/2017-07-19-oem_cran_files/figure-html/unnamed-chunk-17-1.png" width="686.4" /></p>
 <p>In this case, misclassification rate is not the best indicator of performance. The classes here are imbalanced:</p>
 <pre class="r"><code>mean(y)</code></pre>
 <pre><code>## [1] 0.064</code></pre>
@@ -263,7 +220,7 @@ y &lt;- rbinom(nobs, 1, prob = 1 / (1 + exp(-drop(x %*% c(0.25, -1, -1, -0.5, -0
                  gamma = 2,
                  groups = rep(1:10, each = 2), 
                  nfolds = 10, standardize = FALSE)</code></pre>
-<p><img src="../../../../post/2017-07-19-oem_cran_files/figure-html/unnamed-chunk-20-1.png" width="686.4" /></p>
+<p><img src="/post/2017-07-19-oem_cran_files/figure-html/unnamed-chunk-20-1.png" width="686.4" /></p>
 </div>
 </div>
 </div>
@@ -380,7 +337,7 @@ fit.adaptive.grp &lt;- oem(x = x, y = y, penalty = c(&quot;grp.lasso&quot;),
                         group.weights = 1 / group.norms,
                         groups = group.indicators, 
                         lambda = lams)</code></pre>
-<p><img src="../../../../post/2017-07-19-oem_cran_files/figure-html/unnamed-chunk-25-1.png" width="686.4" /></p>
+<p><img src="/post/2017-07-19-oem_cran_files/figure-html/unnamed-chunk-25-1.png" width="686.4" /></p>
 </div>
 </div>
 <div id="more-information" class="section level1">
@@ -392,57 +349,3 @@ fit.adaptive.grp &lt;- oem(x = x, y = y, penalty = c(&quot;grp.lasso&quot;),
 <li>The oem paper: <a href="http://www.tandfonline.com/doi/abs/10.1080/00401706.2015.1054436">oem paper</a></li>
 </ul>
 </div>
-
-    </div>
-  </article>
-
-  
-
-
-</main>
-
-      <footer class="footer">
-        <ul class="footer-links">
-          <li>
-            <a href="../../../../feed.xml" type="application/rss+xml" target="_blank">RSS feed</a>
-          </li>
-          <li>
-            <a href="https://gohugo.io/" class="footer-links-kudos">Made with <img src="../../../../images/hugo-logo.png" width="22" height="22"></a>
-          </li>
-        </ul>
-      </footer>
-
-    </div>
-    
-
-
-
-<script src="//cdn.bootcss.com/highlight.js/9.11.0/highlight.min.js"></script>
-
-
-
-<script src="//cdn.bootcss.com/highlight.js/9.11.0/languages/r.min.js"></script>
-<script src="//cdn.bootcss.com/highlight.js/9.11.0/languages/yaml.min.js"></script>
-<script>hljs.configure({languages: []}); hljs.initHighlightingOnLoad();</script>
-
-
-
-    
-<script src="../../../../js/math-code.js"></script>
-<script async src="//cdn.bootcss.com/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML"></script>
-
-
-    
-<script>
-(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
-
-ga('create', 'UA-49091606-1', 'auto');
-ga('send', 'pageview');
-</script>
-
-  </body>
-</html>
-

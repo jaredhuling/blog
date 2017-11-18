@@ -1,0 +1,147 @@
+---
+date: 2016-07-06
+title: Fast and Big Linear Model Fitting with bigmemory and RcppEigen
+tags: [R, C++, Eigen]
+---
+
+
+
+<p>In a previous <a href="http://casualinference.org/2016/06/04/bigmemory_rcppeigen/">post</a>, I went over the basics of linking up <a href="www.bigmemory.org">bigmemory</a> and the <a href="http://eigen.tuxfamily.org/index.php?title=Main_Page">eigen</a> C++ library via <a href="http://cran.r-project.org/web/packages/RcppEigen/index.html">RcppEigen</a>. In this post I’ll take this a bit further by creating a version of the <code>fastLm()</code> function of RcppEigen that can accept bigmemory objects. By doing so, we will create a fast way to fit linear models using data which is too big to fit in RAM. With RcppEigen, fitting linear models using out-of-memory computation doesn’t have to be slow. The code for this is all on github in the <a href="https://github.com/jaredhuling/bigFastlm">bigFastlm</a> package.</p>
+<p>Before we even start, most of the work is already done as we’ll just need to change a few lines of the core C++ code of the <code>fastLm()</code> function so that it we can map the bigmemory pointer to data on disk to an eigen matrix object.</p>
+<p>The core code of <code>fastLm</code> can be found <a href="https://github.com/RcppCore/RcppEigen/tree/master/src">here</a>. The data object which is being loaded into C++ from R is mapped to an eigen matrix object at line 208 of <code>fastLm.cpp</code>.</p>
+<pre class="cpp"><code>const Map&lt;MatrixXd&gt;  X(as&lt;Map&lt;MatrixXd&gt; &gt;(Xs));</code></pre>
+<p>We need to change the above code to</p>
+<pre class="cpp"><code>XPtr&lt;BigMatrix&gt; bMPtr(Xs);
+
+unsigned int typedata = bMPtr-&gt;matrix_type();
+
+if (typedata != 8)
+{
+  throw Rcpp::exception(&quot;type for provided big.matrix not available&quot;);
+}
+
+const Map&lt;MatrixXd&gt;  X = Map&lt;MatrixXd&gt;((double *)bMPtr-&gt;matrix(), bMPtr-&gt;nrow(), bMPtr-&gt;ncol()  );</code></pre>
+<p>The above modification first takes Xs as an <a href="http://www.r-bloggers.com/external-pointers-with-rcpp/">Rcpp external pointer object</a> (<code>XPtr</code>) and then checks to make sure it’s a double type (for now I’m ignoring all other data types (int, etc) for simplicity). Now that X is a mapped eigen matix object which points to data on disk, what else do we need to do? Well, not much! We just need to make sure that the correct object types are defined for the R-callable function. To do this, we need to change</p>
+<pre class="cpp"><code>// [[Rcpp::export]]
+Rcpp::List fastLm_Impl(Rcpp::NumericMatrix X, Rcpp::NumericVector y, int type) {
+    return lmsol::fastLm(X, y, type); 
+}</code></pre>
+<p>To</p>
+<pre class="cpp"><code>// [[Rcpp::export]]
+RcppExport SEXP bigLm_Impl(SEXP X, SEXP y, SEXP type)
+{
+  BEGIN_RCPP
+  Rcpp::RObject __result;
+  Rcpp::RNGScope __rngScope;
+  Rcpp::traits::input_parameter&lt; Rcpp::XPtr&lt;BigMatrix&gt; &gt;::type X_(X);
+  Rcpp::traits::input_parameter&lt; Rcpp::NumericVector &gt;::type y_(y);
+  Rcpp::traits::input_parameter&lt; int &gt;::type type_(type);
+  __result = Rcpp::wrap(lmsol::fastLm(X_, y_, type_));
+  return __result;
+  END_RCPP
+}</code></pre>
+<p>in<code>fastLm.cpp</code>. <code>// [[Rcpp::export]]</code> had some trouble doing this automatically, so the above is just what that <em>should</em> have created.</p>
+<p>So now with the proper R functions to call this, we’re basically done. I had to create a few utility functions to make everything work nicely, but the main work is just the above.</p>
+<p>One important detail: for now, we can only use the LLT and LDLT methods for computation, as the other decompositions create objects which scale with the size of the data, so for now I’m ignoring the more robust decompositions like QR. Perhaps someone else can figure out how to perform these in a memory-conscious manner.</p>
+<div id="comparison-with-biglm" class="section level3">
+<h3>Comparison with biglm</h3>
+<p>Now we’ll run a (perhaps not-so-fair) comparison with the <code>biglm</code> function of <a href="https://cran.r-project.org/web/packages/biglm/index.html">biglm</a>. Specifically, we’ll use the <code>biglm.big.matrix</code> function provided by the <a href="https://cran.r-project.org/web/packages/biganalytics/index.html">biganalytics</a> which interfaces bigmemory and biglm. The following code creates a bigmemory object on disk (actually, two because biglm requires the matrix object to contain the response, whereas bigFastlm requires that the response be an R vector. It’s hard to say which is a better design choice, but I’m sticking with the approach which doesn’t allow an R formula expression).</p>
+<pre class="r"><code>suppressMessages(library(bigmemory))
+suppressMessages(library(biganalytics))
+suppressMessages(library(bigFastlm))
+
+nrows &lt;- 100000
+ncols &lt;- 100
+bkFile &lt;- &quot;big_matrix.bk&quot;
+descFile &lt;- &quot;big_matrix.desc&quot;
+big_mat &lt;- filebacked.big.matrix(nrow           = nrows, 
+                                 ncol           = ncols, 
+                                 type           = &quot;double&quot;,  
+                                 backingfile    = bkFile, 
+                                 backingpath    = &quot;.&quot;, 
+                                 descriptorfile = descFile,
+                                 dimnames       = c(NULL, NULL))
+
+set.seed(123)
+for (i in 1:ncols) big_mat[, i] = rnorm(nrows, mean = 1/sqrt(i)) * i
+
+
+bkFile &lt;- &quot;big_matrix2.bk&quot;
+descFile &lt;- &quot;big_matrix2.desc&quot;
+big_mat2 &lt;- filebacked.big.matrix(nrow           = nrows, 
+                                  ncol           = ncols + 1, 
+                                  type           = &quot;double&quot;,  
+                                  backingfile    = bkFile, 
+                                  backingpath    = &quot;.&quot;, 
+                                  descriptorfile = descFile,
+                                  dimnames       = c(NULL, NULL))
+
+for (i in 1:ncols) big_mat2[, i + 1] = big_mat[, i]
+
+
+y &lt;- rnorm(nrows)
+big_mat2[,1] &lt;- y
+
+options(bigmemory.allow.dimnames=TRUE)
+colnames(big_mat2) &lt;- c(&quot;y&quot;, paste0(&quot;V&quot;, 1:ncols))
+
+options(bigmemory.allow.dimnames=FALSE)
+
+## create formula for biglm
+form &lt;- as.formula(paste(&quot;y ~ -1 +&quot;, paste(paste0(&quot;V&quot;, 1:ncols), collapse = &quot;+&quot;)))</code></pre>
+<p>Now let’s see how <code>biglm</code> and <code>bigLm</code> (eigen + bigmemory) stack up. Note that this is an unfair comparison because <code>biglm</code> requires a formula argument and <code>bigLm</code> assumes you’re passing in a design matrix already and biglm uses the QR decomposition, which is slower than LLT or LDLT.</p>
+<pre class="r"><code>library(microbenchmark)
+
+res &lt;- microbenchmark(biglm.obj  &lt;- biglm.big.matrix(form, data = big_mat2), 
+                      bigLm.obj  &lt;- bigLm(big_mat, y),     
+                      bigLm.obj2 &lt;- bigLmPure(big_mat, y), ## a slightly faster version that doesn&#39;t check for intercept
+                      times = 10L)
+print(summary(res)[,1:7], digits = 4)</code></pre>
+<pre><code>##                                                   expr     min      lq
+## 1 biglm.obj &lt;- biglm.big.matrix(form, data = big_mat2) 1387.00 1456.28
+## 2                       bigLm.obj &lt;- bigLm(big_mat, y)  104.97  108.27
+## 3                  bigLm.obj2 &lt;- bigLmPure(big_mat, y)   95.67   98.16
+##     mean median     uq    max
+## 1 1709.1 1678.3 1978.7 2023.8
+## 2  117.8  111.6  118.9  163.3
+## 3  102.1  102.2  105.2  112.0</code></pre>
+<pre class="r"><code>max(abs(coef(biglm.obj) - coef(bigLm.obj)))</code></pre>
+<pre><code>## [1] 3.339343e-17</code></pre>
+<p><code>bigLm</code> seems to be quite a bit faster than <code>biglm</code>, but how fast is <code>bigLm</code> compared with <code>fastLm</code> (which requires the data to be loaded into memory)? It turns out it’s pretty close on my computer and I don’t even have anything fancy like a solid state drive.</p>
+<pre class="r"><code>suppressMessages(library(RcppEigen))
+
+mat.obj &lt;- big_mat[,]
+
+## both using the LLT decomposition
+res &lt;- microbenchmark(fastLm.obj.llt   &lt;- fastLm(mat.obj, y, method = 2L),     # LLT Cholesky
+                      bigLm.obj.llt    &lt;- bigLm(big_mat, y),                   # LLT Cholesky
+                      fastLm.obj2      &lt;- fastLmPure(mat.obj, y, method = 2L),
+                      bigLm.obj2       &lt;- bigLmPure(big_mat, y),  ## a slightly faster version that doesn&#39;t check for intercept
+                      fastLm.obj.ldlt  &lt;- fastLmPure(mat.obj, y, method = 3L), # LDLT Cholesky
+                      bigLm.obj.ldlt   &lt;- bigLmPure(big_mat, y, method = 1L),  # LDLT Cholesky 
+                      fastLm.obj.qrpiv &lt;- fastLmPure(mat.obj, y, method = 0L), # column-pivoted QR
+                      fastLm.obj.qr    &lt;- fastLmPure(mat.obj, y, method = 1L), # unpivoted QR
+                      times = 25L)
+print(summary(res)[,1:7], digits = 4)</code></pre>
+<pre><code>##                                                      expr    min     lq
+## 1       fastLm.obj.llt &lt;- fastLm(mat.obj, y, method = 2L) 272.72 393.90
+## 2                      bigLm.obj.llt &lt;- bigLm(big_mat, y) 103.52 106.61
+## 3      fastLm.obj2 &lt;- fastLmPure(mat.obj, y, method = 2L)  87.55  90.99
+## 4                     bigLm.obj2 &lt;- bigLmPure(big_mat, y)  96.26 102.15
+## 5  fastLm.obj.ldlt &lt;- fastLmPure(mat.obj, y, method = 3L)  87.68  90.95
+## 6    bigLm.obj.ldlt &lt;- bigLmPure(big_mat, y, method = 1L)  96.29  99.36
+## 7 fastLm.obj.qrpiv &lt;- fastLmPure(mat.obj, y, method = 0L) 592.81 607.57
+## 8    fastLm.obj.qr &lt;- fastLmPure(mat.obj, y, method = 1L) 460.69 481.82
+##     mean median     uq    max
+## 1 390.43 398.37 405.25 472.56
+## 2 110.31 109.16 112.57 119.83
+## 3  92.70  92.56  94.73  99.06
+## 4 103.24 103.29 105.69 109.56
+## 5  94.71  94.48  96.49 112.28
+## 6 102.44 102.53 104.90 108.80
+## 7 616.19 615.64 621.77 651.15
+## 8 493.23 494.02 505.28 516.39</code></pre>
+<pre class="r"><code>max(abs(coef(fastLm.obj.llt) - coef(bigLm.obj.llt)))</code></pre>
+<pre><code>## [1] 2.645453e-17</code></pre>
+<p>Future work would be to try to figure out how to make the QR decomposition memory-feasible and also to write a function for generalized linear models.</p>
+</div>

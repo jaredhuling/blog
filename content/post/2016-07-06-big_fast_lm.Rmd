@@ -1,5 +1,5 @@
 ---
-layout: post
+date: 2016-07-06
 title: Fast and Big Linear Model Fitting with bigmemory and RcppEigen
 tags: [R, C++, Eigen]
 ---

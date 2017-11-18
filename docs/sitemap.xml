@@ -8,8 +8,8 @@
   </url>
   
   <url>
-    <loc>/2016/07/07/fast-and-big-linear-model-fitting-with-bigmemory-and-rcppeigen/</loc>
-    <lastmod>2016-07-07T00:00:00+00:00</lastmod>
+    <loc>/2016/07/06/fast-and-big-linear-model-fitting-with-bigmemory-and-rcppeigen/</loc>
+    <lastmod>2016-07-06T00:00:00+00:00</lastmod>
   </url>
   
   <url>
@@ -41,7 +41,7 @@
   
   <url>
     <loc>/tags/eigen/</loc>
-    <lastmod>2016-07-07T00:00:00+00:00</lastmod>
+    <lastmod>2016-07-06T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
@@ -65,12 +65,6 @@
   
   <url>
     <loc>/tags/r/</loc>
-    <lastmod>2017-07-19T00:00:00+00:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>/categories/r/</loc>
     <lastmod>2017-07-19T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>

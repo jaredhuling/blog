@@ -1,5 +1,5 @@
 ---
-layout: post
+date: 2017-07-19
 title: The oem package for penalized regression is on CRAN
 tags: [R, C++, computational-statistics, machine-learning]
 references:
