@@ -118,12 +118,12 @@ res &lt;- microbenchmark(cs1 &lt;- colSums(big_mat[,]),
                       cs2 &lt;- big.colSums(big_mat), 
                       times = 25L)
 print(summary(res)[,1:7], digits = 5)</code></pre>
-<pre><code>##                          expr     min      lq    mean  median      uq
-## 1 cs1 &lt;- colSums(big_mat[, ]) 1293.87 1547.69 1810.17 1621.73 1736.58
-## 2 cs2 &lt;- big.colSums(big_mat)  124.62  128.69  138.55  131.72  134.24
+<pre><code>##                          expr     min     lq    mean  median      uq
+## 1 cs1 &lt;- colSums(big_mat[, ]) 1302.36 1502.6 1640.12 1571.61 1717.86
+## 2 cs2 &lt;- big.colSums(big_mat)  105.26  111.4  123.02  115.14  118.63
 ##       max
-## 1 4152.83
-## 2  259.84</code></pre>
+## 1 3250.77
+## 2  272.96</code></pre>
 <pre class="r"><code>all.equal(cs1, cs2)</code></pre>
 <pre><code>## [1] TRUE</code></pre>
 <p>The memory usage is obviously much lower when we don’t load the big.matrix object into memory too.</p>
@@ -134,11 +134,11 @@ cs1 &lt;- colSums(big_mat[,])
 Rprof(NULL)
 summaryRprof(&quot;base_mem.out&quot;, memory = &quot;stats&quot;)[[1]][4]</code></pre>
 <pre><code>## max.vsize.large 
-##       501377614</code></pre>
+##       501377612</code></pre>
 <pre class="r"><code>gc()</code></pre>
 <pre><code>##           used (Mb) gc trigger   (Mb)  max used   (Mb)
 ## Ncells 1637506 87.5    2637877  140.9   2473902  132.2
-## Vcells 2806498 21.5  579488417 4421.2 503295947 3839.9</code></pre>
+## Vcells 2806498 21.5  579488417 4421.2 503295945 3839.9</code></pre>
 <pre class="r"><code>Rprof(&quot;eigen_mem.out&quot;, memory.profiling = TRUE)
 # Call the function to be profiled
 cs2 &lt;- big.colSums(big_mat)
@@ -150,9 +150,9 @@ summaryRprof(&quot;eigen_mem.out&quot;, memory = &quot;stats&quot;)[[1]][4]</cod
                       cp2 &lt;- big.crossprod(big_mat), 
                       times = 5L)
 print(summary(res)[,1:7], digits = 4)</code></pre>
-<pre><code>##                            expr    min    lq  mean median     uq   max
-## 1 cp1 &lt;- crossprod(big_mat[, ]) 77.309 77.87 83.11 79.422 81.254 99.67
-## 2 cp2 &lt;- big.crossprod(big_mat)  9.602  9.61  9.99  9.758  9.855 11.13</code></pre>
+<pre><code>##                            expr    min    lq   mean median     uq   max
+## 1 cp1 &lt;- crossprod(big_mat[, ]) 75.203 75.81 76.410 76.402 76.409 78.23
+## 2 cp2 &lt;- big.crossprod(big_mat)  9.559  9.60  9.725  9.657  9.747 10.06</code></pre>
 <pre class="r"><code>all.equal(cp1, cp2)</code></pre>
 <pre><code>## [1] TRUE</code></pre>
 <p>In a following post I’ll investigate fitting linear models via Eigen and bigmemory <code>big.matrix</code> objects and see how the speed compares with the <a href="https://cran.r-project.org/web/packages/biglm/index.html">biglm</a> package.</p>
