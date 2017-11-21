@@ -1,71 +1,5 @@
-<!DOCTYPE html>
-<html lang="en-us">
-  <head>
-    <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="generator" content="Hugo 0.30.2" />
-
-
-<title>The oem package for penalized regression is on CRAN - Jared Huling</title>
-<meta property="og:title" content="The oem package for penalized regression is on CRAN - Jared Huling">
-
-
-
-  
-
-
-
-
-
-
-
-
-<link href='//cdn.bootcss.com/highlight.js/9.11.0/styles/arta.min.css' rel='stylesheet' type='text/css' />
-
-
-
-<link rel="stylesheet" href="../../../../css/fonts.css" media="all">
-<link rel="stylesheet" href="../../../../css/main.css" media="all">
-
-
-
-  </head>
-  <body>
-    <div class="wrapper">
-      <header class="header">
-        <nav class="nav">
-  <a href="../../../../" class="nav-logo">
-    <img src="../../../../images/%3cnil%3e"
-         width=""
-         height=""
-         alt="">
-  </a>
-
-  <ul class="nav-links">
-    
-    <li><a href="../../../../about/">About</a></li>
-    
-  </ul>
-</nav>
-
-      </header>
-
-
-<main class="content" role="main">
-
-  <article class="article">
-    
-    <span class="article-duration">11 min read</span>
-    
-
-    <h1 class="article-title">The oem package for penalized regression is on CRAN</h1>
-
-    
-    <span class="article-date">2017/07/19</span>
-    
-
-    <div class="article-content">
-      <p>The <a href="https://cran.r-project.org/package=oem">oem</a> package has been on CRAN for some time now, but with the latest update I expect few structural changes to the user interface. <code>oem</code> is a package for the estimation of various penalized regression models using the oem algorithm of <a href="http://amstat.tandfonline.com/doi/abs/10.1080/00401706.2015.1054436">Xiong et al. (2016)</a>. The focus of <code>oem</code> is to provide high performance computation for big <strong>tall</strong> data. Many applications not only have a large number of variables, but a vast number of observations; <code>oem</code> is designed to perform well in these settings.</p>
+<p>build— date: 2017-07-19 title: The oem package for penalized regression is on CRAN tags: [R, C++, computational-statistics, machine-learning] references: - id: xiong16 title: ‘Orthogonalizing EM: A Design-Based Least Squares Algorithm’ author: - family: Xiong given: Shifeng - family: Dai given: Bin - family: Huling given: Jared - family: Qian given: Peter Z.G. container-title: Technometrics, in press type: article-journal issued: year: 2016 —</p>
+<p>The <a href="https://cran.r-project.org/package=oem">oem</a> package has been on CRAN for some time now, but with the latest update I expect few structural changes to the user interface. <code>oem</code> is a package for the estimation of various penalized regression models using the oem algorithm of <a href="http://amstat.tandfonline.com/doi/abs/10.1080/00401706.2015.1054436">Xiong et al. (2016)</a>. The focus of <code>oem</code> is to provide high performance computation for big <strong>tall</strong> data. Many applications not only have a large number of variables, but a vast number of observations; <code>oem</code> is designed to perform well in these settings.</p>
 <ul>
 <li>Fast computation for big <strong>tall</strong> data</li>
 <li>Efficient computation for computation for multiple penalties simultaneously</li>
@@ -94,117 +28,17 @@ y &lt;- drop(x %*% c(0.5, 0.5, -0.5, -0.5, 1, rep(0, nvars - 5))) + rnorm(nobs, 
 <pre class="r"><code>fit1 &lt;- oem(x = x, y = y, penalty = &quot;lasso&quot;)</code></pre>
 <p>Plot the solution path</p>
 <pre class="r"><code>plot(fit1)</code></pre>
-<p><img src="../../../../post/2017-07-19-oem_cran_files/figure-html/unnamed-chunk-7-1.png" width="686.4" /></p>
+<p><img src="../../../post/2017-07-19-oem_cran_files/figure-html/unnamed-chunk-7-1.png" width="686.4" /></p>
 </div>
 <div id="key-features" class="section level1">
 <h1>Key Features</h1>
 <div id="available-functions" class="section level2">
 <h2>Available functions</h2>
-<table>
-<thead>
-<tr class="header">
-<th align="left">Function Name</th>
-<th align="left">Functionality</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td align="left"><code>oem()</code></td>
-<td align="left">Main fitting function</td>
-</tr>
-<tr class="even">
-<td align="left"><code>predict.oemfit()</code></td>
-<td align="left">Prediction for oem objects</td>
-</tr>
-<tr class="odd">
-<td align="left"><code>plot.oemfit()</code></td>
-<td align="left">Plotting for oem objects</td>
-</tr>
-<tr class="even">
-<td align="left"><code>logLik.oemfit()</code></td>
-<td align="left">log Likelihood for oem objects</td>
-</tr>
-<tr class="odd">
-<td align="left"><code>cv.oem()</code></td>
-<td align="left">Cross-validation function</td>
-</tr>
-<tr class="even">
-<td align="left"><code>xval.oem()</code></td>
-<td align="left">Accelerated cross-validation for linear models</td>
-</tr>
-<tr class="odd">
-<td align="left"><code>predict.cv.oem()</code></td>
-<td align="left">Prediction for cv.oem objects</td>
-</tr>
-<tr class="even">
-<td align="left"><code>plot.cv.oem()</code></td>
-<td align="left">Plotting for cv.oem objects</td>
-</tr>
-<tr class="odd">
-<td align="left"><code>logLik.cv.oem()</code></td>
-<td align="left">log Likelihood for cv.oem objects</td>
-</tr>
-</tbody>
-</table>
+<p>|——————–+———————————–| | Function Name | Functionality | |====================+===================================| | <code>oem()</code> | Main fitting function | |——————–+———————————–| | <code>predict.oemfit()</code> | Prediction for oem objects | |——————–+———————————–| | <code>plot.oemfit()</code> | Plotting for oem objects | |——————–+———————————–| | <code>logLik.oemfit()</code> | log Likelihood for oem objects | |——————–+———————————–| | <code>cv.oem()</code> | Cross-validation function | |——————–+———————————–| | <code>xval.oem()</code> | Accelerated cross-validation for linear models | |——————–+———————————–| | <code>predict.cv.oem()</code> | Prediction for cv.oem objects | |——————–+———————————–| | <code>plot.cv.oem()</code> | Plotting for cv.oem objects | |——————–+———————————–| | <code>logLik.cv.oem()</code> | log Likelihood for cv.oem objects | |——————–+———————————–|</p>
 </div>
 <div id="available-penalties" class="section level2">
 <h2>Available Penalties</h2>
-<table style="width:96%;">
-<colgroup>
-<col width="29%" />
-<col width="29%" />
-<col width="37%" />
-</colgroup>
-<thead>
-<tr class="header">
-<th align="left">Penalty</th>
-<th align="left">Option Name</th>
-<th align="left">Penalty Form</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td align="left">Lasso</td>
-<td align="left"><code>lasso</code></td>
-<td align="left"><span class="math inline">\(\lambda \sum_{j = 1}^pd_j\vert\beta_j\vert\)</span></td>
-</tr>
-<tr class="even">
-<td align="left">Elastic Net</td>
-<td align="left"><code>elastic.net</code></td>
-<td align="left"><span class="math inline">\(\lambda \sum_{j = 1}^p\alpha d_j\vert\beta_j\vert + (1 - \alpha)\lambda \sum_{j = 1}^pd_j\beta_j^2\)</span></td>
-</tr>
-<tr class="odd">
-<td align="left">MCP</td>
-<td align="left"><code>mcp</code></td>
-<td align="left"><span class="math inline">\(\lambda \sum_{j = 1}^pd_j \int_0^{\beta_j}(1 - x/(\gamma\lambda d_j))_+\mathrm{d}x\)</span></td>
-</tr>
-<tr class="even">
-<td align="left">SCAD</td>
-<td align="left"><code>scad</code></td>
-<td align="left"><span class="math inline">\(\sum_{j = 1}^p p^{SCAD}_{\lambda d_j,\gamma}(\beta_j)\)</span></td>
-</tr>
-<tr class="odd">
-<td align="left">Group Lasso</td>
-<td align="left"><code>grp.lasso</code></td>
-<td align="left"><span class="math inline">\(\lambda \sum_{k = 1}^Gd_k\sqrt{\sum_{j \in g_k}\beta_j^2}\)</span></td>
-</tr>
-<tr class="even">
-<td align="left">Group MCP</td>
-<td align="left"><code>grp.mcp</code></td>
-<td align="left"><span class="math inline">\(\sum_{k = 1}^G p_{\lambda d_k,\gamma}^{MCP}\left(\vert \vert \boldsymbol\beta_{g_k}\vert \vert_2\right)\)</span></td>
-</tr>
-<tr class="odd">
-<td align="left">Group SCAD</td>
-<td align="left"><code>grp.scad</code></td>
-<td align="left"><span class="math inline">\(\sum_{k = 1}^G p_{\lambda d_k,\gamma}^{SCAD}\left(\vert \vert \boldsymbol\beta_{g_k}\vert \vert_2\right)\)</span></td>
-</tr>
-<tr class="even">
-<td align="left">Sparse Group Lasso</td>
-<td align="left"><code>sparse.grp.lasso</code></td>
-<td align="left"><span class="math inline">\(\lambda \alpha\sum_{j = 1}^pd_j\vert\beta_j\vert + \lambda (1-\alpha)\sum_{k = 1}^Gd_k\sqrt{\sum_{j \in g_k}\beta_j^2}\)</span></td>
-</tr>
-</tbody>
-</table>
+<p>|——————–+——————–+————————–| | Penalty | Option Name | Penalty Form | |====================+===============================================| | Lasso | <code>lasso</code> | <span class="math inline">\(\lambda \sum_{j = 1}^pd_j\vert\beta_j\vert\)</span> | |——————–+——————–+————————–| | Elastic Net | <code>elastic.net</code> | <span class="math inline">\(\lambda \sum_{j = 1}^p\alpha d_j\vert\beta_j\vert + (1 - \alpha)\lambda \sum_{j = 1}^pd_j\beta_j^2\)</span> | |——————–+——————–+————————–| | MCP | <code>mcp</code> | <span class="math inline">\(\lambda \sum_{j = 1}^pd_j \int_0^{\beta_j}(1 - x/(\gamma\lambda d_j))_+\mathrm{d}x\)</span> | |——————–+——————–+————————–| | SCAD | <code>scad</code> | <span class="math inline">\(\sum_{j = 1}^p p^{SCAD}_{\lambda d_j,\gamma}(\beta_j)\)</span> | |——————–+——————–+————————–| | Group Lasso | <code>grp.lasso</code> | <span class="math inline">\(\lambda \sum_{k = 1}^Gd_k\sqrt{\sum_{j \in g_k}\beta_j^2}\)</span> | |——————–+——————–+————————–| | Group MCP | <code>grp.mcp</code> | <span class="math inline">\(\sum_{k = 1}^G p_{\lambda d_k,\gamma}^{MCP}\left(\vert \vert \boldsymbol\beta_{g_k}\vert \vert_2\right)\)</span> | |——————–+——————–+————————–| | Group SCAD | <code>grp.scad</code> | <span class="math inline">\(\sum_{k = 1}^G p_{\lambda d_k,\gamma}^{SCAD}\left(\vert \vert \boldsymbol\beta_{g_k}\vert \vert_2\right)\)</span> | |——————–+——————–+————————–| | Sparse Group Lasso | <code>sparse.grp.lasso</code> | <span class="math inline">\(\lambda \alpha\sum_{j = 1}^pd_j\vert\beta_j\vert + \lambda (1-\alpha)\sum_{k = 1}^Gd_k\sqrt{\sum_{j \in g_k}\beta_j^2}\)</span> | |——————–+——————–+————————–|</p>
 <p>where <span class="math inline">\(\vert\vert\boldsymbol\beta_{g_k}\vert\vert_2 = \sqrt{\sum_{j \in g_k}\beta_j^2}\)</span>.</p>
 <p>Any penalty with <code>.net</code> at the end of its name has a ridge term of <span class="math inline">\((1 - \alpha)\lambda \sum_{j = 1}^pd_j\beta_j^2\)</span> added to it and the original penalty multiplied by <span class="math inline">\(\alpha\)</span>. For example, <code>grp.mcp.net</code> is the penalty</p>
 <p><span class="math display">\[\lambda \sum_{k = 1}^G\alpha p^{MCP}_{\lambda d_k,\gamma}(\vert\vert\boldsymbol\beta_{g_k}\vert\vert_2) + (1 - \alpha)\lambda \sum_{j = 1}^pd_j\beta_j^2.
@@ -213,32 +47,7 @@ y &lt;- drop(x %*% c(0.5, 0.5, -0.5, -0.5, 1, rep(0, nvars - 5))) + rnorm(nobs, 
 <div id="available-model-families" class="section level2">
 <h2>Available Model Families</h2>
 <p>The following models are available currently.</p>
-<table style="width:97%;">
-<colgroup>
-<col width="30%" />
-<col width="29%" />
-<col width="37%" />
-</colgroup>
-<thead>
-<tr class="header">
-<th align="left">Model</th>
-<th align="left">Option Name</th>
-<th align="left">Loss Form</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td align="left">Linear Regression</td>
-<td align="left"><code>gaussian</code></td>
-<td align="left"><span class="math inline">\(\frac{1}{2n}\sum_{i=1}^n(y_i - x_i^T\beta) ^ 2\)</span></td>
-</tr>
-<tr class="even">
-<td align="left">Logistic Regression</td>
-<td align="left"><code>binomial</code></td>
-<td align="left"><span class="math inline">\(-\frac{1}{n}\sum_{i=1}^n\left[y_i x_i^T\beta - \log (1 + \exp\{ x_i^T\beta \} ) \right]\)</span></td>
-</tr>
-</tbody>
-</table>
+<p>|———————+——————–+————————–| | Model | Option Name | Loss Form | |=====================+===============================================| | Linear Regression | <code>gaussian</code> | <span class="math inline">\(\frac{1}{2n}\sum_{i=1}^n(y_i - x_i^T\beta) ^ 2\)</span> | |———————+——————–+————————–| | Logistic Regression | <code>binomial</code> | <span class="math inline">\(-\frac{1}{n}\sum_{i=1}^n\left[y_i x_i^T\beta - \log (1 + \exp\{ x_i^T\beta \} ) \right]\)</span>| |———————+——————–+————————–|</p>
 <p>There are plans to include support for multiple responses, binomial models (not just logistic regression), Cox’s proportional hazards model, and more if requested.</p>
 </div>
 </div>
@@ -254,7 +63,7 @@ plot(fit2, which.model = 1, xvar = &quot;lambda&quot;)
 plot(fit2, which.model = 2, xvar = &quot;lambda&quot;)
 plot(fit2, which.model = 3, xvar = &quot;lambda&quot;)
 plot(fit2, which.model = &quot;grp.mcp&quot;, xvar = &quot;lambda&quot;)</code></pre>
-<p><img src="../../../../post/2017-07-19-oem_cran_files/figure-html/unnamed-chunk-9-1.png" width="686.4" /></p>
+<p><img src="../../../post/2017-07-19-oem_cran_files/figure-html/unnamed-chunk-9-1.png" width="686.4" /></p>
 <div id="timing-comparison" class="section level2">
 <h2>Timing Comparison</h2>
 <p>The following is a demonstration of oem’s efficiency for computing solutions for tuning parameter paths for multiple penalties at once.</p>
@@ -269,21 +78,21 @@ y2 &lt;- drop(x2 %*% c(0.5, 0.5, -0.5, -0.5, 1, rep(0, nvars - 5))) + rnorm(nobs
 system.time(fit2a &lt;- oem(x = x2, y = y2, penalty = c(&quot;grp.lasso&quot;),
                          groups = rep(1:20, each = 5), nlambda = 100L))</code></pre>
 <pre><code>##    user  system elapsed 
-##   0.146   0.018   0.165</code></pre>
+##   0.144   0.010   0.154</code></pre>
 <pre class="r"><code>system.time(fit2b &lt;- oem(x = x2, y = y2, 
                          penalty = c(&quot;grp.lasso&quot;, &quot;lasso&quot;, &quot;mcp&quot;, 
                                      &quot;scad&quot;, &quot;elastic.net&quot;, &quot;grp.mcp&quot;,
                                      &quot;grp.scad&quot;, &quot;sparse.grp.lasso&quot;),
                          groups = rep(1:20, each = 5), nlambda = 100L))</code></pre>
 <pre><code>##    user  system elapsed 
-##   0.160   0.017   0.176</code></pre>
+##   0.169   0.014   0.186</code></pre>
 <pre class="r"><code>system.time(fit2c &lt;- oem(x = x2, y = y2, 
                          penalty = c(&quot;grp.lasso&quot;, &quot;lasso&quot;, &quot;mcp&quot;, 
                                      &quot;scad&quot;, &quot;elastic.net&quot;, &quot;grp.mcp&quot;,
                                      &quot;grp.scad&quot;, &quot;sparse.grp.lasso&quot;),
                          groups = rep(1:20, each = 5), nlambda = 500L))</code></pre>
 <pre><code>##    user  system elapsed 
-##   0.239   0.023   0.263</code></pre>
+##   0.238   0.018   0.259</code></pre>
 </div>
 <div id="logistic-regression" class="section level3">
 <h3>Logistic Regression</h3>
@@ -299,12 +108,12 @@ system.time(fit2a &lt;- oem(x = x2, y = y2, penalty = c(&quot;grp.lasso&quot;),
                          family = &quot;binomial&quot;,
                          groups = rep(1:20, each = 5), nlambda = 100L))</code></pre>
 <pre><code>##    user  system elapsed 
-##   1.130   0.031   1.170</code></pre>
+##   1.203   0.030   1.248</code></pre>
 <pre class="r"><code>system.time(fit2b &lt;- oem(x = x2, y = y2, penalty = c(&quot;grp.lasso&quot;, &quot;lasso&quot;, &quot;mcp&quot;, &quot;scad&quot;, &quot;elastic.net&quot;),
                          family = &quot;binomial&quot;,
                          groups = rep(1:20, each = 5), nlambda = 100L))</code></pre>
 <pre><code>##    user  system elapsed 
-##   5.096   0.065   5.172</code></pre>
+##   5.306   0.087   5.440</code></pre>
 </div>
 </div>
 </div>
@@ -318,14 +127,14 @@ system.time(fit2a &lt;- oem(x = x2, y = y2, penalty = c(&quot;grp.lasso&quot;),
                              groups = rep(1:20, each = 5), 
                              nfolds = 10))</code></pre>
 <pre><code>##    user  system elapsed 
-##   1.142   0.213   1.355</code></pre>
+##   1.161   0.189   1.354</code></pre>
 <p>Plot the cross validation mean squared error results for each model</p>
 <pre class="r"><code>layout(matrix(1:4, ncol = 2))
 plot(cvfit1, which.model = 1)
 plot(cvfit1, which.model = 2)
 plot(cvfit1, which.model = 3)
 plot(cvfit1, which.model = 4)</code></pre>
-<p><img src="../../../../post/2017-07-19-oem_cran_files/figure-html/unnamed-chunk-13-1.png" width="686.4" /></p>
+<p><img src="../../../post/2017-07-19-oem_cran_files/figure-html/unnamed-chunk-13-1.png" width="686.4" /></p>
 <div id="extremely-fast-cross-validation-for-linear-models" class="section level2">
 <h2>Extremely Fast Cross Validation for Linear Models</h2>
 <p>The function <code>xval.oem</code> offers accelerated cross validation for penalized linear models. In many cases is is orders of magnitude faster than cv.oem. It is only recommended for scenarios where the number of observations is larger than the number of variables. In addition to the computational gains in single-core usage, it also benefits from parallelizaton using OpenMP (instead of using foreach, as used by cv.oem). For large enough problems, it has on a similar order of computation time as just fitting one OEM model.</p>
@@ -338,21 +147,21 @@ system.time(cvalfit1 &lt;- cv.oem(x = xc, y = yc, penalty = &quot;lasso&quot;,
                                groups = rep(1:20, each = 5), 
                                nfolds = 10))</code></pre>
 <pre><code>##    user  system elapsed 
-##   4.279   0.926   5.208</code></pre>
+##   4.420   1.006   5.466</code></pre>
 <pre class="r"><code>system.time(xvalfit1 &lt;- xval.oem(x = xc, y = yc, penalty = &quot;lasso&quot;,
                                  groups = rep(1:20, each = 5), 
                                  nfolds = 10))</code></pre>
 <pre><code>##    user  system elapsed 
-##   0.497   0.018   0.515</code></pre>
+##   0.577   0.022   0.602</code></pre>
 <pre class="r"><code>system.time(xvalfit2 &lt;- xval.oem(x = xc, y = yc, penalty = &quot;lasso&quot;,
                                  groups = rep(1:20, each = 5), 
                                  nfolds = 10, ncores = 2))</code></pre>
 <pre><code>##    user  system elapsed 
-##   0.646   0.019   0.389</code></pre>
+##   0.763   0.030   0.460</code></pre>
 <pre class="r"><code>system.time(ofit1 &lt;- oem(x = xc, y = yc, penalty = &quot;lasso&quot;,
                          groups = rep(1:20, each = 5)))</code></pre>
 <pre><code>##    user  system elapsed 
-##   0.228   0.015   0.139</code></pre>
+##   0.243   0.018   0.172</code></pre>
 </div>
 <div id="evaluation-metrics" class="section level2">
 <h2>Evaluation Metrics</h2>
@@ -373,10 +182,10 @@ y &lt;- rbinom(nobs, 1, prob = 1 / (1 + exp(-drop(x %*% c(0.25, -1, -1, -0.5, -0
                  gamma = 2,
                  groups = rep(1:10, each = 2), 
                  nfolds = 10, standardize = FALSE)</code></pre>
-<p><img src="../../../../post/2017-07-19-oem_cran_files/figure-html/unnamed-chunk-17-1.png" width="686.4" /></p>
+<p><img src="../../../post/2017-07-19-oem_cran_files/figure-html/unnamed-chunk-17-1.png" width="686.4" /></p>
 <p>In this case, misclassification rate is not the best indicator of performance. The classes here are imbalanced:</p>
 <pre class="r"><code>mean(y)</code></pre>
-<pre><code>## [1] 0.066</code></pre>
+<pre><code>## [1] 0.072</code></pre>
 </div>
 <div id="area-under-the-roc-curve" class="section level3">
 <h3>Area Under the ROC Curve</h3>
@@ -388,7 +197,7 @@ y &lt;- rbinom(nobs, 1, prob = 1 / (1 + exp(-drop(x %*% c(0.25, -1, -1, -0.5, -0
                  gamma = 2,
                  groups = rep(1:10, each = 2), 
                  nfolds = 10, standardize = FALSE)</code></pre>
-<p><img src="../../../../post/2017-07-19-oem_cran_files/figure-html/unnamed-chunk-20-1.png" width="686.4" /></p>
+<p><img src="../../../post/2017-07-19-oem_cran_files/figure-html/unnamed-chunk-20-1.png" width="686.4" /></p>
 </div>
 </div>
 </div>
@@ -406,16 +215,16 @@ system.time(fit &lt;- oem(x = xc, y = yc,
                        standardize = FALSE, intercept = FALSE,
                        groups = rep(1:20, each = 5)))</code></pre>
 <pre><code>##    user  system elapsed 
-##   0.110   0.027   0.138</code></pre>
+##   0.124   0.031   0.156</code></pre>
 <pre class="r"><code>system.time(fit.xtx &lt;- oem.xtx(xtx = xtx, xty = xty, 
                                penalty = c(&quot;lasso&quot;, &quot;grp.lasso&quot;), 
                                groups = rep(1:20, each = 5))  )  </code></pre>
 <pre><code>##    user  system elapsed 
-##   0.006   0.000   0.007</code></pre>
+##   0.009   0.000   0.008</code></pre>
 <pre class="r"><code>max(abs(fit$beta[[1]][-1,] - fit.xtx$beta[[1]]))</code></pre>
-<pre><code>## [1] 2.065015e-14</code></pre>
+<pre><code>## [1] 1.004752e-14</code></pre>
 <pre class="r"><code>max(abs(fit$beta[[2]][-1,] - fit.xtx$beta[[2]])) </code></pre>
-<pre><code>## [1] 2.065015e-14</code></pre>
+<pre><code>## [1] 7.27543e-15</code></pre>
 <pre class="r"><code>col.std &lt;- apply(xc, 2, sd)
 fit.xtx.s &lt;- oem.xtx(xtx = xtx, xty = xty, 
                      scale.factor = col.std,
@@ -472,13 +281,13 @@ system.time(fit &lt;- oem(x = xc, y = yc,
                        standardize = FALSE, intercept = FALSE,
                        groups = rep(1:20, each = 25)))</code></pre>
 <pre><code>##    user  system elapsed 
-##   2.125   0.146   2.271</code></pre>
+##   2.216   0.138   2.355</code></pre>
 <pre class="r"><code>system.time(fitp &lt;- oem(x = xc, y = yc, 
                         penalty = c(&quot;lasso&quot;, &quot;grp.lasso&quot;), 
                         standardize = FALSE, intercept = FALSE,
                         groups = rep(1:20, each = 25), ncores = 2))</code></pre>
 <pre><code>##    user  system elapsed 
-##   2.372   0.148   1.386</code></pre>
+##   2.380   0.147   1.390</code></pre>
 </div>
 <div id="penalty-adjustment" class="section level2">
 <h2>Penalty Adjustment</h2>
@@ -505,7 +314,7 @@ fit.adaptive.grp &lt;- oem(x = x, y = y, penalty = c(&quot;grp.lasso&quot;),
                         group.weights = 1 / group.norms,
                         groups = group.indicators, 
                         lambda = lams)</code></pre>
-<p><img src="../../../../post/2017-07-19-oem_cran_files/figure-html/unnamed-chunk-25-1.png" width="686.4" /></p>
+<p><img src="../../../post/2017-07-19-oem_cran_files/figure-html/unnamed-chunk-25-1.png" width="686.4" /></p>
 </div>
 </div>
 <div id="more-information" class="section level1">
@@ -517,57 +326,3 @@ fit.adaptive.grp &lt;- oem(x = x, y = y, penalty = c(&quot;grp.lasso&quot;),
 <li>The oem paper: <a href="http://www.tandfonline.com/doi/abs/10.1080/00401706.2015.1054436">oem paper</a></li>
 </ul>
 </div>
-
-    </div>
-  </article>
-
-  
-
-
-</main>
-
-      <footer class="footer">
-        <ul class="footer-links">
-          <li>
-            <a href="../../../../feed.xml" type="application/rss+xml" target="_blank">RSS feed</a>
-          </li>
-          <li>
-            <a href="https://gohugo.io/" class="footer-links-kudos">Made with <img src="../../../../images/hugo-logo.png" width="22" height="22"></a>
-          </li>
-        </ul>
-      </footer>
-
-    </div>
-    
-
-
-
-<script src="//cdn.bootcss.com/highlight.js/9.11.0/highlight.min.js"></script>
-
-
-
-<script src="//cdn.bootcss.com/highlight.js/9.11.0/languages/r.min.js"></script>
-<script src="//cdn.bootcss.com/highlight.js/9.11.0/languages/yaml.min.js"></script>
-<script>hljs.configure({languages: []}); hljs.initHighlightingOnLoad();</script>
-
-
-
-    
-<script src="../../../../js/math-code.js"></script>
-<script async src="//cdn.bootcss.com/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML"></script>
-
-
-    
-<script>
-(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
-
-ga('create', 'UA-49091606-1', 'auto');
-ga('send', 'pageview');
-</script>
-
-  </body>
-</html>
-

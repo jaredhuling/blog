@@ -83,49 +83,33 @@ plot(fit1)
 ## Available functions
 
 
-|--------------------+-----------------------------------|
 | Function Name      | Functionality                     |
-|====================+===================================|
+|:-------------------|:----------------------------------|
 | `oem()`            | Main fitting function             |
-|--------------------+-----------------------------------|
 | `predict.oemfit()` | Prediction for oem objects        |
-|--------------------+-----------------------------------|
 | `plot.oemfit()`    | Plotting for oem objects          |
-|--------------------+-----------------------------------|
 | `logLik.oemfit()`  | log Likelihood for oem objects    |
-|--------------------+-----------------------------------|
 | `cv.oem()`         | Cross-validation function         |
-|--------------------+-----------------------------------|
 | `xval.oem()`       | Accelerated cross-validation for linear models         |
-|--------------------+-----------------------------------|
 | `predict.cv.oem()` | Prediction for cv.oem objects     |
-|--------------------+-----------------------------------|
 | `plot.cv.oem()`    | Plotting for cv.oem objects       |
-|--------------------+-----------------------------------|
 | `logLik.cv.oem()`  | log Likelihood for cv.oem objects |
-|--------------------+-----------------------------------|
+
+
 
 ## Available Penalties
 
-|--------------------+--------------------+--------------------------|
+
 | Penalty            | Option Name        |  Penalty Form            |
-|====================+===============================================|
+|:-------------------|:-------------------|:-------------------------|
 | Lasso              | `lasso`            | $\lambda \sum_{j = 1}^pd_j\vert\beta_j\vert$ |
-|--------------------+--------------------+--------------------------|
 | Elastic Net        | `elastic.net`      | $\lambda \sum_{j = 1}^p\alpha d_j\vert\beta_j\vert + (1 - \alpha)\lambda \sum_{j = 1}^pd_j\beta_j^2$ |
-|--------------------+--------------------+--------------------------|
 | MCP                | `mcp`              | $\lambda \sum_{j = 1}^pd_j \int_0^{\beta_j}(1 - x/(\gamma\lambda d_j))_+\mathrm{d}x$ |
-|--------------------+--------------------+--------------------------|
 | SCAD               | `scad`             | $\sum_{j = 1}^p p^{SCAD}_{\lambda d_j,\gamma}(\beta_j)$               |
-|--------------------+--------------------+--------------------------|
 | Group Lasso        | `grp.lasso`        | $\lambda \sum_{k = 1}^Gd_k\sqrt{\sum_{j \in g_k}\beta_j^2}$ |
-|--------------------+--------------------+--------------------------|
 | Group MCP          | `grp.mcp`          | $\sum_{k = 1}^G p_{\lambda d_k,\gamma}^{MCP}\left(\vert \vert \boldsymbol\beta_{g_k}\vert \vert_2\right)$ |
-|--------------------+--------------------+--------------------------|
 | Group SCAD         | `grp.scad`         | $\sum_{k = 1}^G p_{\lambda d_k,\gamma}^{SCAD}\left(\vert \vert \boldsymbol\beta_{g_k}\vert \vert_2\right)$ |
-|--------------------+--------------------+--------------------------|
 | Sparse Group Lasso | `sparse.grp.lasso` | $\lambda \alpha\sum_{j = 1}^pd_j\vert\beta_j\vert + \lambda (1-\alpha)\sum_{k = 1}^Gd_k\sqrt{\sum_{j \in g_k}\beta_j^2}$ |
-|--------------------+--------------------+--------------------------|
 
 where $\vert\vert\boldsymbol\beta_{g_k}\vert\vert_2 = \sqrt{\sum_{j \in g_k}\beta_j^2}$.
 
@@ -139,13 +123,10 @@ $$
 
 The following models are available currently. 
 
-|---------------------+--------------------+--------------------------|
 | Model               | Option Name        |  Loss Form               |
-|=====================+===============================================|
+|:--------------------|:-------------------|:-------------------------|
 | Linear Regression   | `gaussian`         | $\frac{1}{2n}\sum_{i=1}^n(y_i - x_i^T\beta) ^ 2$ |
-|---------------------+--------------------+--------------------------|
 | Logistic Regression | `binomial`         |  $-\frac{1}{n}\sum_{i=1}^n\left[y_i x_i^T\beta - \log (1 + \exp\{ x_i^T\beta \} ) \right]$|
-|---------------------+--------------------+--------------------------|
 
 There are plans to include support for multiple responses, binomial models (not just logistic regression), Cox's proportional hazards model, and more if requested.
 
