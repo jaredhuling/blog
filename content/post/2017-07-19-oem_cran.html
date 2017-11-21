@@ -226,21 +226,21 @@ y2 &lt;- drop(x2 %*% c(0.5, 0.5, -0.5, -0.5, 1, rep(0, nvars - 5))) + rnorm(nobs
 system.time(fit2a &lt;- oem(x = x2, y = y2, penalty = c(&quot;grp.lasso&quot;),
                          groups = rep(1:20, each = 5), nlambda = 100L))</code></pre>
 <pre><code>##    user  system elapsed 
-##   0.146   0.018   0.165</code></pre>
+##   0.139   0.016   0.156</code></pre>
 <pre class="r"><code>system.time(fit2b &lt;- oem(x = x2, y = y2, 
                          penalty = c(&quot;grp.lasso&quot;, &quot;lasso&quot;, &quot;mcp&quot;, 
                                      &quot;scad&quot;, &quot;elastic.net&quot;, &quot;grp.mcp&quot;,
                                      &quot;grp.scad&quot;, &quot;sparse.grp.lasso&quot;),
                          groups = rep(1:20, each = 5), nlambda = 100L))</code></pre>
 <pre><code>##    user  system elapsed 
-##   0.160   0.017   0.176</code></pre>
+##   0.159   0.016   0.176</code></pre>
 <pre class="r"><code>system.time(fit2c &lt;- oem(x = x2, y = y2, 
                          penalty = c(&quot;grp.lasso&quot;, &quot;lasso&quot;, &quot;mcp&quot;, 
                                      &quot;scad&quot;, &quot;elastic.net&quot;, &quot;grp.mcp&quot;,
                                      &quot;grp.scad&quot;, &quot;sparse.grp.lasso&quot;),
                          groups = rep(1:20, each = 5), nlambda = 500L))</code></pre>
 <pre><code>##    user  system elapsed 
-##   0.239   0.023   0.263</code></pre>
+##   0.228   0.023   0.250</code></pre>
 </div>
 <div id="logistic-regression" class="section level3">
 <h3>Logistic Regression</h3>
@@ -256,12 +256,12 @@ system.time(fit2a &lt;- oem(x = x2, y = y2, penalty = c(&quot;grp.lasso&quot;),
                          family = &quot;binomial&quot;,
                          groups = rep(1:20, each = 5), nlambda = 100L))</code></pre>
 <pre><code>##    user  system elapsed 
-##   1.130   0.031   1.170</code></pre>
+##   0.958   0.035   1.000</code></pre>
 <pre class="r"><code>system.time(fit2b &lt;- oem(x = x2, y = y2, penalty = c(&quot;grp.lasso&quot;, &quot;lasso&quot;, &quot;mcp&quot;, &quot;scad&quot;, &quot;elastic.net&quot;),
                          family = &quot;binomial&quot;,
                          groups = rep(1:20, each = 5), nlambda = 100L))</code></pre>
 <pre><code>##    user  system elapsed 
-##   5.096   0.065   5.172</code></pre>
+##   4.997   0.072   5.093</code></pre>
 </div>
 </div>
 </div>
@@ -275,7 +275,7 @@ system.time(fit2a &lt;- oem(x = x2, y = y2, penalty = c(&quot;grp.lasso&quot;),
                              groups = rep(1:20, each = 5), 
                              nfolds = 10))</code></pre>
 <pre><code>##    user  system elapsed 
-##   1.142   0.213   1.355</code></pre>
+##   1.171   0.225   1.400</code></pre>
 <p>Plot the cross validation mean squared error results for each model</p>
 <pre class="r"><code>layout(matrix(1:4, ncol = 2))
 plot(cvfit1, which.model = 1)
@@ -295,26 +295,71 @@ system.time(cvalfit1 &lt;- cv.oem(x = xc, y = yc, penalty = &quot;lasso&quot;,
                                groups = rep(1:20, each = 5), 
                                nfolds = 10))</code></pre>
 <pre><code>##    user  system elapsed 
-##   4.279   0.926   5.208</code></pre>
+##   4.392   0.990   5.400</code></pre>
 <pre class="r"><code>system.time(xvalfit1 &lt;- xval.oem(x = xc, y = yc, penalty = &quot;lasso&quot;,
                                  groups = rep(1:20, each = 5), 
                                  nfolds = 10))</code></pre>
 <pre><code>##    user  system elapsed 
-##   0.497   0.018   0.515</code></pre>
+##   0.538   0.021   0.562</code></pre>
 <pre class="r"><code>system.time(xvalfit2 &lt;- xval.oem(x = xc, y = yc, penalty = &quot;lasso&quot;,
                                  groups = rep(1:20, each = 5), 
                                  nfolds = 10, ncores = 2))</code></pre>
 <pre><code>##    user  system elapsed 
-##   0.646   0.019   0.389</code></pre>
+##   0.657   0.020   0.395</code></pre>
 <pre class="r"><code>system.time(ofit1 &lt;- oem(x = xc, y = yc, penalty = &quot;lasso&quot;,
                          groups = rep(1:20, each = 5)))</code></pre>
 <pre><code>##    user  system elapsed 
-##   0.228   0.015   0.139</code></pre>
+##   0.229   0.015   0.143</code></pre>
 </div>
 <div id="evaluation-metrics" class="section level2">
 <h2>Evaluation Metrics</h2>
 <p>A variety of evaluation metrics can be used for cross validation. The available metrics can be found in the table below</p>
-<p>|———————–+————————————+————————–| | Model | Metric | <code>type.measure=</code> | |=======================+====================================+==========================| | <strong>Linear Regression</strong> | Mean squared error | <code>mse</code> or <code>deviance</code> | |———————–+————————————+————————–| | | Mean absolute error | <code>mae</code> | |———————–+————————————+————————–| |<strong>Logistic Regression</strong>| Deviance | <code>deviance</code> | |———————–+————————————+————————–| | | Area under the ROC curve | <code>auc</code> | |———————–+————————————+————————–| | | Misclassification Rate | <code>class</code> | |———————–+————————————+————————–| | | Mean squared error of fitted mean | <code>mse</code> | |———————–+————————————+————————–| | | Mean absolute error of fitted mean | <code>mae</code> | |———————–+————————————+————————–|</p>
+<table>
+<thead>
+<tr class="header">
+<th align="left">Model</th>
+<th align="left">Metric</th>
+<th align="left"><code>type.measure=</code></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left"><strong>Linear Regression</strong></td>
+<td align="left">Mean squared error</td>
+<td align="left"><code>mse</code> or <code>deviance</code></td>
+</tr>
+<tr class="even">
+<td align="left"></td>
+<td align="left">Mean absolute error</td>
+<td align="left"><code>mae</code></td>
+</tr>
+<tr class="odd">
+<td align="left"><strong>Logistic Regression</strong></td>
+<td align="left">Deviance</td>
+<td align="left"><code>deviance</code></td>
+</tr>
+<tr class="even">
+<td align="left"></td>
+<td align="left">Area under the ROC curve</td>
+<td align="left"><code>auc</code></td>
+</tr>
+<tr class="odd">
+<td align="left"></td>
+<td align="left">Misclassification Rate</td>
+<td align="left"><code>class</code></td>
+</tr>
+<tr class="even">
+<td align="left"></td>
+<td align="left">Mean squared error of fitted mean</td>
+<td align="left"><code>mse</code></td>
+</tr>
+<tr class="odd">
+<td align="left"></td>
+<td align="left">Mean absolute error of fitted mean</td>
+<td align="left"><code>mae</code></td>
+</tr>
+</tbody>
+</table>
 <p>Consider a binary outcome setting with logistic regression.</p>
 <pre class="r"><code>nobs  &lt;- 2e3
 nvars &lt;- 20
@@ -333,7 +378,7 @@ y &lt;- rbinom(nobs, 1, prob = 1 / (1 + exp(-drop(x %*% c(0.25, -1, -1, -0.5, -0
 <p><img src="/post/2017-07-19-oem_cran_files/figure-html/unnamed-chunk-17-1.png" width="686.4" /></p>
 <p>In this case, misclassification rate is not the best indicator of performance. The classes here are imbalanced:</p>
 <pre class="r"><code>mean(y)</code></pre>
-<pre><code>## [1] 0.066</code></pre>
+<pre><code>## [1] 0.0695</code></pre>
 </div>
 <div id="area-under-the-roc-curve" class="section level3">
 <h3>Area Under the ROC Curve</h3>
@@ -363,16 +408,16 @@ system.time(fit &lt;- oem(x = xc, y = yc,
                        standardize = FALSE, intercept = FALSE,
                        groups = rep(1:20, each = 5)))</code></pre>
 <pre><code>##    user  system elapsed 
-##   0.110   0.027   0.138</code></pre>
+##   0.131   0.033   0.164</code></pre>
 <pre class="r"><code>system.time(fit.xtx &lt;- oem.xtx(xtx = xtx, xty = xty, 
                                penalty = c(&quot;lasso&quot;, &quot;grp.lasso&quot;), 
                                groups = rep(1:20, each = 5))  )  </code></pre>
 <pre><code>##    user  system elapsed 
-##   0.006   0.000   0.007</code></pre>
+##   0.008   0.000   0.009</code></pre>
 <pre class="r"><code>max(abs(fit$beta[[1]][-1,] - fit.xtx$beta[[1]]))</code></pre>
-<pre><code>## [1] 2.065015e-14</code></pre>
+<pre><code>## [1] 2.353673e-14</code></pre>
 <pre class="r"><code>max(abs(fit$beta[[2]][-1,] - fit.xtx$beta[[2]])) </code></pre>
-<pre><code>## [1] 2.065015e-14</code></pre>
+<pre><code>## [1] 2.353673e-14</code></pre>
 <pre class="r"><code>col.std &lt;- apply(xc, 2, sd)
 fit.xtx.s &lt;- oem.xtx(xtx = xtx, xty = xty, 
                      scale.factor = col.std,
@@ -429,13 +474,13 @@ system.time(fit &lt;- oem(x = xc, y = yc,
                        standardize = FALSE, intercept = FALSE,
                        groups = rep(1:20, each = 25)))</code></pre>
 <pre><code>##    user  system elapsed 
-##   2.125   0.146   2.271</code></pre>
+##   2.167   0.137   2.305</code></pre>
 <pre class="r"><code>system.time(fitp &lt;- oem(x = xc, y = yc, 
                         penalty = c(&quot;lasso&quot;, &quot;grp.lasso&quot;), 
                         standardize = FALSE, intercept = FALSE,
                         groups = rep(1:20, each = 25), ncores = 2))</code></pre>
 <pre><code>##    user  system elapsed 
-##   2.372   0.148   1.386</code></pre>
+##   2.368   0.137   1.358</code></pre>
 </div>
 <div id="penalty-adjustment" class="section level2">
 <h2>Penalty Adjustment</h2>
