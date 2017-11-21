@@ -5,7 +5,10 @@ hidden = true
 menu = "main"
 +++
 
-<http://jaredhuling.org>
+Jared Huling is an Assistant Professor in the Department of Statistics at The Ohio State University
+
+- <http://jaredhuling.org>
+- <https://github.com/jaredhuling>
 
 ***
 
