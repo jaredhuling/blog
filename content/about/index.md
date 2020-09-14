@@ -5,7 +5,7 @@ hidden = true
 menu = "main"
 +++
 
-Jared Huling is an Assistant Professor in the Department of Statistics at The Ohio State University
+Jared Huling is an Assistant Professor, Division of Biostatistics, School of Public Health, University of Minnesota
 
 - <http://jaredhuling.org>
 - <https://github.com/jaredhuling>
